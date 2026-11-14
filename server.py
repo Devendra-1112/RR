@@ -9,6 +9,11 @@ load_dotenv()
 API_KEY = os.getenv('GEMINI_API_KEY', '')
 
 class WarRoomHandler(SimpleHTTPRequestHandler):
+    def do_GET(self):
+        if self.path in ('', '/', '/index.html'):
+            self.path = '/dashboard.html'
+        return super().do_GET()
+
     def end_headers(self):
         # Enable CORS and caching headers
         self.send_header('Access-Control-Allow-Origin', '*')
@@ -146,10 +151,12 @@ class WarRoomHandler(SimpleHTTPRequestHandler):
                 "• **Top 10 Bowlers:** Arshdeep Singh, Bhuvneshwar Kumar, Yuzvendra Chahal, Harshal Patel, Jason Holder, Mohammed Siraj, Haris Rauf, Maheesh Theekshana, Mohammad Nawaz, Trent Boult."
             )
 
-def run_server(port=8088):
-    server_address = ('127.0.0.1', port)
+def run_server(port=None):
+    if port is None:
+        port = int(os.environ.get('PORT', 8088))
+    server_address = ('0.0.0.0', port)
     httpd = HTTPServer(server_address, WarRoomHandler)
-    print(f"Rajasthan Royals War Room Server running at http://127.0.0.1:{port}")
+    print(f"Rajasthan Royals War Room Server running at http://0.0.0.0:{port}")
     httpd.serve_forever()
 
 if __name__ == '__main__':

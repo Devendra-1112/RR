@@ -161,3 +161,4 @@ uncontracted_bowlers.sort(key=lambda x: x['ppi'], reverse=True)
 print("\n=== TOP 15 UNCONTRACTED BOWLERS (NOT IN ANY IPL TEAM) ===")
 for i, w in enumerate(uncontracted_bowlers[:15], 1):
     print(f"{i}. {w['name']} | PPI: {w['ppi']} | Econ: {w['p_econ']} | Wkts: {w['p_wkts']} | Balls: {w['p_balls']}")
+
