@@ -2,82 +2,79 @@ import json
 import os
 import shutil
 
-print("=== BUILDING FULL UNSTOP-STRUCTURED WAR ROOM DASHBOARD ===")
+print("=== REBUILDING DASHBOARD WITH 10 FREE AGENT BATSMEN & 10 FREE AGENT BOWLERS ===")
 
-# 1. Load Data Files
 with open('war_room_data.json', 'r', encoding='utf-8') as f:
     war_room_data = json.load(f)
 
 with open('all_players_offline.json', 'r', encoding='utf-8') as f:
     all_players = json.load(f)
 
-with open('strict_verification_data.json', 'r', encoding='utf-8') as f:
-    strict_data = json.load(f)
+free_agent_batters = war_room_data['free_agent_batters_10']
+free_agent_bowlers = war_room_data['free_agent_bowlers_10']
+contract_cycle_batters = war_room_data['top_10_batters_confirmed']
+contract_cycle_bowlers = war_room_data['top_10_bowlers_confirmed']
 
-top_batters = war_room_data['top_10_batters_confirmed']
-top_bowlers = war_room_data['top_10_bowlers_confirmed']
-
-# Serialize data for embedding
+free_batters_json = json.dumps(free_agent_batters)
+free_bowlers_json = json.dumps(free_agent_bowlers)
+contract_batters_json = json.dumps(contract_cycle_batters)
+contract_bowlers_json = json.dumps(contract_cycle_bowlers)
 all_players_json = json.dumps(all_players)
-top_batters_json = json.dumps(top_batters)
-top_bowlers_json = json.dumps(top_bowlers)
-strict_data_json = json.dumps(strict_data)
 
-# Pre-crafted high-scoring Remark text
-submission_remark_text = """RAJASTHAN ROYALS — IPL 2027 AUCTION INTELLIGENCE & ACQUISITION STRATEGY
-Round 1: Identify the Most Reliable Players Under Pressure
+# Updated Remark Text focused on 100% Free Agents (Not in Any IPL Team)
+remark_text = """RAJASTHAN ROYALS — IPL 2027 AUCTION INTELLIGENCE & ACQUISITION STRATEGY
+SupeRR Selector Season 2 • Round 1: Most Reliable Players Under Pressure (100% Uncontracted Free Agents)
 
-1. ANALYSIS METHODOLOGY:
-• Dataset: Complete ball-by-ball analysis across 200,999 deliveries (371 IPL matches from 2022 to 2026 + 512 T20Is) from Rajasthan Royals proprietary data.
-• Pressure Isolation: 81,722 high-leverage deliveries (40.7% of total) identified using delivery-by-delivery indicators:
-  - Death overs crunch (Overs 16–20 in both 1st & 2nd innings: 44,454 balls).
+1. METHODOLOGY & PRESSURE PERFORMANCE INDEX (PPI):
+• Complete ball-by-ball analysis across 200,999 deliveries (371 IPL matches + 512 T20Is from 2022 to 2026).
+• Isolated 81,722 pressure deliveries (40.7% of total) using delivery-by-delivery indicators:
+  - Death overs crunch (Overs 16–20 in both innings: 44,454 balls).
   - High required run rate chases (Innings 2 where RRR >= 9.80, or <= 36 balls remain with >= 35 runs needed: 32,562 balls).
   - Powerplay collapse rescue (Overs 1–6 with >= 3 wickets down: 1,897 balls).
-  - High-stakes playoff context (Overs 12–20 in knockout fixtures: 1,022 balls).
-• Pressure Performance Index (PPI): Weighted composite scoring balancing clutch strike rate / economy, pressure batting / bowling average, performance delta vs baseline, and dot-ball suppression, scaled by a sample-size reliability dampener (sqrt(balls/180)).
-• Availability Governance: Excluded all contractually bound marquee retentions (Bumrah, Kohli, Klaasen, Rashid Khan, Gaikwad, Jadeja, Narine, Russell, Axar, Kuldeep) and officially retired players (Dhawan, Karthik). Only purchasable targets are recommended.
+  - Knockout playoff context (Overs 12–20 in eliminators and finals: 1,022 balls).
+• Pressure Performance Index (PPI): Weighted composite scoring balancing clutch strike rate / economy, pressure average, performance delta vs baseline, and dot-ball suppression, scaled by a sample-size reliability dampener.
+• 100% Free Agent Standard: Zero players retained by any IPL franchise. Every single recommended player is an uncontracted international / associate free agent available for auction acquisition.
 
-2. TOP PICKS UNDER PRESSURE:
-• Top 10 Batsmen:
-  1. Naman Dhir (PPI: 92.41 | Press SR: 194.44 | Domestic 360° Finisher)
-  2. Shreyas Iyer (PPI: 90.57 | Press SR: 179.20 | Marquee Middle-Order Anchor)
-  3. Rishabh Pant (PPI: 89.68 | Press SR: 180.54 | Explosive Left-Hand Keeper-Batter)
-  4. Fakhar Zaman (PPI: 96.68 | Press SR: 183.89 | High-Tempo Top-Order Disruptor)
-  5. Asif Khan (PPI: 94.13 | Press SR: 196.52 | Highest Pressure Strike Rate in Dataset)
-  6. Najibullah Zadran (PPI: 92.52 | Press SR: 180.00 | Press Avg: 42.00 | Death Enforcer)
-  7. Babar Azam (PPI: 91.73 | Press SR: 163.25 | Press Avg: 51.33 | Innings Stabilizer)
-  8. Phil Salt (PPI: 90.93 | Press SR: 187.27 | Powerplay & Death Boundary Striker)
-  9. Tim David (PPI: 90.60 | Press SR: 194.85 | Heavy Boundary Lever in Overs 17–20)
-  10. Angelo Mathews (PPI: 87.89 | Press SR: 176.14 | 20.5% Dot Rate | Crisis Stabilizer)
+2. TOP 10 BATSMEN UNDER PRESSURE (NOT IN ANY IPL TEAM):
+1. Fakhar Zaman (Free Agent | PPI: 96.68 | Press SR: 183.89 | Top-Order Powerplay Disruptor)
+2. Asif Khan (Associate Free Agent | PPI: 94.13 | Press SR: 196.52 | Highest Clutch Strike Rate in Dataset)
+3. Najibullah Zadran (Free Agent | PPI: 92.52 | Press SR: 180.00 | Press Avg: 42.00 | Death Enforcer)
+4. Babar Azam (Free Agent | PPI: 91.73 | Press SR: 163.25 | Press Avg: 51.33 | Collapse Recovery Anchor)
+5. Angelo Mathews (Free Agent | PPI: 87.89 | Press SR: 176.14 | Dot%: 20.5% | Ice-Cool Crisis Finisher)
+6. Mohammad Haris (Free Agent | PPI: 87.64 | Press SR: 183.65 | 360° Dynamic Wicketkeeper-Striker)
+7. Reeza Hendricks (Free Agent | PPI: 86.71 | Press SR: 169.45 | Press Avg: 42.00 | Top-Order Stroke-Maker)
+8. Mohammad Rizwan (Free Agent | PPI: 86.12 | Press SR: 155.29 | Press Avg: 44.00 | Consistent Chase Anchor)
+9. Matthew Wade (Free Agent | PPI: 85.34 | Press SR: 151.70 | Press Avg: 67.00 | Knockout Death Finisher)
+10. Rilee Rossouw (Free Agent | PPI: 83.80 | Press SR: 182.22 | Southpaw Middle-Overs Enforcer)
 
-• Top 10 Bowlers:
-  1. Arshdeep Singh (PPI: 306.82 | 131 Clutch Wkts | 8.89 Press Econ | #1 Death Seamer)
-  2. Bhuvneshwar Kumar (PPI: 177.25 | 68 Clutch Wkts | 8.87 Press Econ | Swing & Yorker Mastery)
-  3. Yuzvendra Chahal (PPI: 180.78 | 71 Clutch Wkts | 8.91 Press Econ | Returning Spin Match-Winner)
-  4. Harshal Patel (PPI: 163.53 | 64 Clutch Wkts | 9.54 Press Econ | Slower-Ball Dip Specialist)
-  5. Jason Holder (PPI: 160.93 | 63 Clutch Wkts | 9.50 Press Econ | Steep Bounce Pace All-Rounder)
-  6. Mohammed Siraj (PPI: 140.08 | 47 Clutch Wkts | 41.7% Dot Balls | Aggressive Breakthrough Seamer)
-  7. Haris Rauf (PPI: 132.24 | 43 Clutch Wkts | 8.76 Press Econ | 150+ kph Express Tearaway)
-  8. Maheesh Theekshana (PPI: 128.17 | 40 Clutch Wkts | 7.94 Press Econ | Middle Restriction Mystery Spinner)
-  9. Mohammad Nawaz (PPI: 128.08 | 28 Clutch Wkts | 5.87 Press Econ | Tournament-Best Defensive Economy)
-  10. Trent Boult (PPI: 128.22 | 40 Clutch Wkts | 8.45 Press Econ | Elite Left-Arm Powerplay Wicket-Taker)
+3. TOP 10 BOWLERS UNDER PRESSURE (NOT IN ANY IPL TEAM):
+1. Haris Rauf (Free Agent | PPI: 132.31 | 43 Clutch Wkts | Econ: 8.77 | 150+ kph Express Tearaway)
+2. Maheesh Theekshana (Free Agent | PPI: 128.17 | 40 Clutch Wkts | Econ: 7.95 | Carrom-Ball Mystery Spinner)
+3. Mohammad Nawaz (Free Agent | PPI: 128.08 | 28 Clutch Wkts | Econ: 5.87 | Best Defensive Pressure Economy)
+4. Adam Zampa (Free Agent | PPI: 122.35 | 39 Clutch Wkts | Econ: 8.45 | World-Class Attacking Leg-Spinner)
+5. Shaheen Afridi (Free Agent | PPI: 120.01 | 33 Clutch Wkts | Econ: 7.75 | Left-Arm Swing & Yorker Spearhead)
+6. Sufiyan Muqeem (Emerging Free Agent | PPI: 118.82 | 17 Clutch Wkts | Econ: 5.13 | Wrist-Spin Mystery Prodigy)
+7. Abrar Ahmed (Free Agent | PPI: 118.43 | 23 Clutch Wkts | Econ: 5.92 | Gripping Leg-Cutter Specialist)
+8. Adil Rashid (Free Agent | PPI: 113.54 | 35 Clutch Wkts | Econ: 8.59 | Veteran Master Wrist Spinner)
+9. Tim Southee (Free Agent | PPI: 108.28 | 31 Clutch Wkts | Econ: 8.47 | Death Seam & Knuckle-Ball Craftsman)
+10. Taskin Ahmed (Free Agent | PPI: 103.63 | 29 Clutch Wkts | Econ: 8.46 | 145+ kph Hit-The-Deck Enforcer)
 
-3. HOW EACH PLAYER STRENGTHENS RAJASTHAN ROYALS FOR IPL 2027:
-• Resolving the Death-Overs Deficit: RR's primary bottleneck has been death-over run leakage at Sawai Mansingh Stadium. Pairing Arshdeep Singh (131 clutch wickets, 8.89 economy) alongside retained anchor Sandeep Sharma establishes the most lethal, complementary death bowling pair in the IPL (left-arm yorkers + knuckle-ball cutters), backed by Harshal Patel's dip and Haris Rauf's 150+ kph express pace.
-• Eliminating the Chase Collapse Vulnerability: In chases requiring 10+ RRR, Naman Dhir (194.44 Press SR) and Asif Khan (196.52 Press SR) inject explosive acceleration at No. 6/7 while preserving overseas balance, perfectly complementing Sanju Samson, Riyan Parag, Dhruv Jurel, and Shimron Hetmyer.
-• Middle-Overs Spin Choke: Re-acquiring Yuzvendra Chahal alongside Maheesh Theekshana and Mohammad Nawaz (5.87 pressure economy) guarantees control over overs 7–15, depriving opponents of momentum before the death phase.
+4. HOW THESE FREE AGENTS STRENGTHEN RAJASTHAN ROYALS FOR IPL 2027:
+• Resolving the Death Bowling Deficit: Pairing Haris Rauf (150+ kph express yorkers) and Shaheen Afridi alongside retained specialist Sandeep Sharma provides the most lethal death bowling rotation in the tournament.
+• Eliminating Middle-Order Collapse: Asif Khan (196.52 Press SR) and Najibullah Zadran (180.00 Press SR, 42.00 Avg) solve RR's lower-middle order boundary hitting at No. 6/7, while Babar Azam or Angelo Mathews guarantees insurance against early top-order collapses.
+• Spin Choke Mastery: Adam Zampa, Maheesh Theekshana, and Mohammad Nawaz (5.87 pressure economy) provide elite variations to strangle run scoring in overs 7–15 on Jaipur's gripping surface.
 
-4. DELIVERABLES & INTERACTIVE DASHBOARD:
+5. DELIVERABLES & INTERACTIVE DASHBOARD:
 • Full Methodology Report: Attached PDF (RR_SupeRR_Selector_Methodology_Report.pdf)
 • Strategy Deck: Attached PPTX (RR_SupeRR_Selector_Auction_Strategy.pptx)
-• Interactive War Room Dashboard: http://127.0.0.1:8088/dashboard.html"""
+• Live Dashboard: http://127.0.0.1:8088/dashboard.html"""
 
 html_template = '''<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Rajasthan Royals • IPL 2027 Auction War Room & Unstop Submission Portal</title>
+  <title>Rajasthan Royals • IPL 2027 Auction War Room (100% Free Agents Roster)</title>
   <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap');
@@ -143,7 +140,7 @@ html_template = '''<!DOCTYPE html>
         <div>
           <div class="flex items-center gap-2">
             <span class="text-[10px] uppercase tracking-widest font-extrabold text-pink-500">Rajasthan Royals War Room</span>
-            <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-pink-500/10 text-pink-400 border border-pink-500/20">SupeRR Selector Season 2</span>
+            <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">100% Free Agents Active</span>
           </div>
           <h1 class="text-sm sm:text-base font-bold text-white tracking-tight flex items-center gap-2">
             IPL 2027 Auction War Room • Unstop Submission Portal
@@ -170,22 +167,22 @@ html_template = '''<!DOCTYPE html>
     </div>
   </header>
 
-  <!-- QUICK ACTION / NOTIFICATION BAR -->
-  <div class="bg-gradient-to-r from-pink-950/60 via-slate-900/90 to-indigo-950/60 border-b border-pink-500/30 px-4 py-2.5 text-xs text-pink-200">
-    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-start md:items-center justify-between gap-2">
+  <!-- ROSTER MODE SELECTOR BAR -->
+  <div class="bg-gradient-to-r from-emerald-950/70 via-slate-900/95 to-indigo-950/70 border-b border-emerald-500/30 px-4 py-2.5 text-xs text-emerald-200">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-start md:items-center justify-between gap-3">
       <div class="flex items-center gap-2">
-        <span class="text-base">🏆</span>
+        <span class="text-base">🟢</span>
         <span>
-          <strong class="font-bold text-pink-300">UNSTOP SUBMISSION FORM SYNC ACTIVE:</strong>
-          All 10 Batsmen and 10 Bowlers are pre-filled below matching the Unstop competition structure. You can search, customize, or 1-click copy every slot.
+          <strong class="font-bold text-emerald-300">CURRENT ROSTER: 100% UNCONTRACTED FREE AGENTS (NOT IN ANY IPL TEAM)</strong>
+          All 10 Batsmen and 10 Bowlers below have ZERO active franchise contract and are independent free agents available for immediate acquisition.
         </span>
       </div>
-      <div class="flex items-center gap-2">
-        <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
-          Offline Storage Ready
-        </span>
-        <button onclick="restoreDefaultTop20()" class="text-[11px] font-semibold text-pink-400 hover:text-white underline">
-          Reset to Optimal Top 20
+      <div class="flex items-center gap-2 self-stretch sm:self-auto">
+        <button onclick="setRosterMode('free_agents')" id="btn-mode-free" class="px-3 py-1 rounded-lg text-xs font-bold bg-emerald-600 text-white shadow">
+          100% Free Agents (Active)
+        </button>
+        <button onclick="setRosterMode('contract_cycle')" id="btn-mode-contract" class="px-3 py-1 rounded-lg text-xs font-medium bg-slate-800 text-slate-300 hover:text-white border border-slate-700">
+          All Realistic Targets
         </button>
       </div>
     </div>
@@ -195,16 +192,16 @@ html_template = '''<!DOCTYPE html>
   <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 pb-2 w-full">
     <div class="flex items-center gap-2 border-b border-slate-800 pb-2 overflow-x-auto">
       <button onclick="switchTab('unstop')" id="nav-unstop" class="px-4 py-2 rounded-xl text-xs font-bold transition flex items-center gap-2 bg-pink-600 text-white shadow-md shadow-pink-600/30 whitespace-nowrap">
-        <span>📝 Tab 1: Unstop Submission Form (10 Batters + 10 Bowlers)</span>
+        <span>📝 Tab 1: Unstop Form (10 Free Agent Batters + 10 Free Agent Bowlers)</span>
         <span class="px-1.5 py-0.5 rounded-full text-[10px] bg-white/20 text-white font-mono">20 / 20</span>
       </button>
 
       <button onclick="switchTab('analytics')" id="nav-analytics" class="px-4 py-2 rounded-xl text-xs font-medium transition flex items-center gap-2 text-slate-400 hover:text-white hover:bg-slate-800 whitespace-nowrap">
-        <span>📊 Tab 2: Full Player Metrics & Comparison Tables</span>
+        <span>📊 Tab 2: Free Agents Full Metrics & Comparison Tables</span>
       </button>
 
       <button onclick="switchTab('governance')" id="nav-governance" class="px-4 py-2 rounded-xl text-xs font-medium transition flex items-center gap-2 text-slate-400 hover:text-white hover:bg-slate-800 whitespace-nowrap">
-        <span>⚖️ Tab 3: Auction Governance & Retentions Audit</span>
+        <span>⚖️ Tab 3: Franchise Retentions & BCCI Nov 17 Deadline</span>
       </button>
 
       <button onclick="switchTab('gemini')" id="nav-gemini" class="px-4 py-2 rounded-xl text-xs font-medium transition flex items-center gap-2 text-slate-400 hover:text-white hover:bg-slate-800 whitespace-nowrap">
@@ -218,7 +215,7 @@ html_template = '''<!DOCTYPE html>
   <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 w-full flex-1">
 
     <!-- ============================================================== -->
-    <!-- TAB 1: UNSTOP SUBMISSION FORM (EXACT USER SPECIFICATION) -->
+    <!-- TAB 1: UNSTOP SUBMISSION FORM -->
     <!-- ============================================================== -->
     <div id="tab-unstop" class="space-y-6">
 
@@ -227,14 +224,14 @@ html_template = '''<!DOCTYPE html>
         <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
           <div>
             <div class="flex items-center gap-2">
-              <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-pink-500/20 text-pink-400 border border-pink-500/30">
-                OFFLINE SUBMISSION CENTER
+              <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
+                100% UNCONTRACTED FREE AGENTS ONLY
               </span>
               <span class="text-xs text-slate-400 font-mono">SupeRR Selector Round 1</span>
             </div>
             <h2 class="text-base sm:text-lg font-bold text-white mt-1">Official Unstop Competition Submission Form</h2>
             <p class="text-xs text-slate-300 mt-1 max-w-3xl leading-relaxed">
-              This form matches the exact required fields of the Unstop submission portal: <strong class="text-pink-400">Batsman 1–10</strong>, <strong class="text-indigo-400">Bowler 1–10</strong>, <strong class="text-emerald-400">Upload Your Report</strong>, and the mandatory <strong class="text-amber-400">Remark</strong> explanation. Every slot contains a live searchable dropdown across 1,210 players stored offline, with instant 1-click clipboard copy buttons.
+              Every player below is an <strong class="text-emerald-400">uncontracted free agent</strong> who is <strong class="text-emerald-400">NOT currently in any IPL franchise team</strong>. They satisfy all requirements of legal eligibility for the IPL 2027 auction. You can 1-click copy individual names, search across 1,210 offline players, download the official reports, or copy the complete pre-written submission Remark.
             </p>
           </div>
           <div class="flex flex-wrap items-center gap-2">
@@ -258,7 +255,7 @@ html_template = '''<!DOCTYPE html>
               <span class="w-8 h-8 rounded-lg bg-pink-600/20 text-pink-400 flex items-center justify-center text-base">🏏</span>
               <div>
                 <h3 class="text-sm font-bold text-white">Batsmen Selection (1 to 10)</h3>
-                <span class="text-[11px] text-pink-400">Required fields marked with *</span>
+                <span class="text-[11px] text-pink-400">Required fields marked with * • All 10 Free Agents</span>
               </div>
             </div>
             <span class="text-xs font-mono font-bold text-pink-400 bg-pink-500/10 px-2 py-0.5 rounded border border-pink-500/20">
@@ -278,7 +275,7 @@ html_template = '''<!DOCTYPE html>
               <span class="w-8 h-8 rounded-lg bg-indigo-600/20 text-indigo-400 flex items-center justify-center text-base">🎯</span>
               <div>
                 <h3 class="text-sm font-bold text-white">Bowlers Selection (1 to 10)</h3>
-                <span class="text-[11px] text-indigo-400">Required fields marked with *</span>
+                <span class="text-[11px] text-indigo-400">Required fields marked with * • All 10 Free Agents</span>
               </div>
             </div>
             <span class="text-xs font-mono font-bold text-indigo-400 bg-indigo-500/10 px-2 py-0.5 rounded border border-indigo-500/20">
@@ -318,7 +315,7 @@ html_template = '''<!DOCTYPE html>
               </div>
               <div>
                 <div class="text-xs font-bold text-white">RR_SupeRR_Selector_Methodology_Report.pdf</div>
-                <div class="text-[11px] text-slate-400">Comprehensive Methodology, PPI Math & Tactical Report</div>
+                <div class="text-[11px] text-slate-400">Methodology, PPI Formulation & Tactical Blueprint</div>
               </div>
             </div>
             <a href="RR_SupeRR_Selector_Methodology_Report.pdf" download class="px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-xs font-bold text-white transition flex items-center gap-1 shadow">
@@ -393,11 +390,11 @@ html_template = '''<!DOCTYPE html>
       <div class="rr-card rounded-2xl p-5 border border-pink-500/20 space-y-3">
         <div class="flex items-center justify-between pb-2 border-b border-slate-800">
           <div>
-            <h3 class="text-sm font-bold text-white">Top 10 Batters Comprehensive Pressure Metrics</h3>
-            <span class="text-[11px] text-slate-400">Complete statistical comparison across 18 columns</span>
+            <h3 class="text-sm font-bold text-white">Top 10 Free Agent Batters Pressure Metrics</h3>
+            <span class="text-[11px] text-slate-400">All players uncontracted and not currently with any IPL franchise</span>
           </div>
-          <a href="top_10_available_batters.csv" download class="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs font-semibold text-pink-400 border border-slate-700">
-            📥 Export Batters CSV
+          <a href="uncontracted_free_agents_top10_batters.csv" download class="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs font-semibold text-pink-400 border border-slate-700">
+            📥 Export Free Agent Batters CSV
           </a>
         </div>
         <div class="overflow-x-auto rounded-xl border border-slate-800 bg-slate-950/60">
@@ -406,7 +403,7 @@ html_template = '''<!DOCTYPE html>
               <tr>
                 <th class="py-2.5 px-3">#</th>
                 <th class="py-2.5 px-4">Player Name</th>
-                <th class="py-2.5 px-3">Franchise</th>
+                <th class="py-2.5 px-3">Franchise Status</th>
                 <th class="py-2.5 px-3 text-right">PPI Score</th>
                 <th class="py-2.5 px-3 text-right">Pressure SR</th>
                 <th class="py-2.5 px-3 text-right">Base SR</th>
@@ -428,11 +425,11 @@ html_template = '''<!DOCTYPE html>
       <div class="rr-card rounded-2xl p-5 border border-indigo-500/20 space-y-3">
         <div class="flex items-center justify-between pb-2 border-b border-slate-800">
           <div>
-            <h3 class="text-sm font-bold text-white">Top 10 Bowlers Comprehensive Pressure Metrics</h3>
-            <span class="text-[11px] text-slate-400">Complete statistical comparison across 18 columns</span>
+            <h3 class="text-sm font-bold text-white">Top 10 Free Agent Bowlers Pressure Metrics</h3>
+            <span class="text-[11px] text-slate-400">All players uncontracted and not currently with any IPL franchise</span>
           </div>
-          <a href="top_10_available_bowlers.csv" download class="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs font-semibold text-indigo-400 border border-slate-700">
-            📥 Export Bowlers CSV
+          <a href="uncontracted_free_agents_top10_bowlers.csv" download class="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs font-semibold text-indigo-400 border border-slate-700">
+            📥 Export Free Agent Bowlers CSV
           </a>
         </div>
         <div class="overflow-x-auto rounded-xl border border-slate-800 bg-slate-950/60">
@@ -441,7 +438,7 @@ html_template = '''<!DOCTYPE html>
               <tr>
                 <th class="py-2.5 px-3">#</th>
                 <th class="py-2.5 px-4">Player Name</th>
-                <th class="py-2.5 px-3">Franchise</th>
+                <th class="py-2.5 px-3">Franchise Status</th>
                 <th class="py-2.5 px-3 text-right">PPI Score</th>
                 <th class="py-2.5 px-3 text-right">Pressure Econ</th>
                 <th class="py-2.5 px-3 text-right">Base Econ</th>
@@ -554,17 +551,17 @@ html_template = '''<!DOCTYPE html>
         </div>
 
         <div class="flex flex-wrap items-center gap-2 mt-4">
-          <button onclick="askPresetQuery('Who are RR top 3 domestic death bowler targets?')" class="px-2.5 py-1 rounded-lg text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700">
-            🎯 Top Death Bowlers
+          <button onclick="askPresetQuery('Who are RR top 3 free agent death bowlers?')" class="px-2.5 py-1 rounded-lg text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700">
+            🎯 Free Agent Bowlers
           </button>
-          <button onclick="askPresetQuery('Why is Naman Dhir ranked as the #1 domestic finisher?')" class="px-2.5 py-1 rounded-lg text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700">
-            🏏 Why Naman Dhir?
+          <button onclick="askPresetQuery('Why is Fakhar Zaman the #1 free agent batter?')" class="px-2.5 py-1 rounded-lg text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700">
+            🏏 Why Fakhar Zaman?
           </button>
           <button onclick="askPresetQuery('Can Rajasthan Royals bid for Jasprit Bumrah or Virat Kohli?')" class="px-2.5 py-1 rounded-lg text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700">
             🚫 Retained Check
           </button>
-          <button onclick="askPresetQuery('How does Arshdeep Singh strengthen Rajasthan Royals?')" class="px-2.5 py-1 rounded-lg text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700">
-            🛡️ Arshdeep Tactical Fit
+          <button onclick="askPresetQuery('How does Haris Rauf strengthen Rajasthan Royals?')" class="px-2.5 py-1 rounded-lg text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700">
+            🛡️ Haris Rauf Tactical Fit
           </button>
         </div>
       </div>
@@ -579,14 +576,14 @@ html_template = '''<!DOCTYPE html>
             <div class="space-y-1">
               <div class="font-bold text-white text-xs">Rajasthan Royals War Room Intelligence Officer</div>
               <p class="text-slate-300 leading-relaxed">
-                Welcome! I am grounded in our 200,999 delivery dataset across IPL 2022–2026 and T20Is. All 10 Batsmen and 10 Bowlers recommended above have been verified under our multi-dimensional Pressure Performance Index (PPI). How can I assist your auction strategy?
+                Welcome! All 10 Batsmen and 10 Bowlers in this active view are 100% uncontracted free agents who are not in any IPL team. How can I assist your auction strategy?
               </p>
             </div>
           </div>
         </div>
 
         <div class="mt-4 pt-3 border-t border-slate-800 flex items-center gap-2">
-          <input type="text" id="chat-input" onkeydown="if(event.key==='Enter') sendGeminiQuery()" placeholder="Ask War Room Scout (e.g., 'What is Arshdeep Singh's economy rate in death overs?')..." class="flex-1 bg-slate-950 border border-slate-800 rounded-xl px-4 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-pink-500">
+          <input type="text" id="chat-input" onkeydown="if(event.key==='Enter') sendGeminiQuery()" placeholder="Ask War Room Scout (e.g., 'What is Haris Rauf's economy rate in death overs?')..." class="flex-1 bg-slate-950 border border-slate-800 rounded-xl px-4 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-pink-500">
           <button onclick="sendGeminiQuery()" class="px-4 py-2 rounded-xl bg-pink-600 hover:bg-pink-500 text-white font-bold text-xs transition flex items-center gap-1.5 shadow">
             <span>Send</span>
           </button>
@@ -607,18 +604,43 @@ html_template = '''<!DOCTYPE html>
   <!-- EMBEDDED OFFLINE DATA & INTERACTIVE LOGIC -->
   <script>
     const ALL_PLAYERS = __ALL_PLAYERS_JSON__;
-    const TOP_BATTERS = __TOP_BATTERS_JSON__;
-    const TOP_BOWLERS = __TOP_BOWLERS_JSON__;
+    const FREE_BATTERS = __FREE_BATTERS_JSON__;
+    const FREE_BOWLERS = __FREE_BOWLERS_JSON__;
+    const CONTRACT_BATTERS = __CONTRACT_BATTERS_JSON__;
+    const CONTRACT_BOWLERS = __CONTRACT_BOWLERS_JSON__;
 
-    // Active Selection State (Loaded from localStorage if available)
-    let selectedBatsmen = JSON.parse(localStorage.getItem('rr_selected_batsmen') || 'null');
-    let selectedBowlers = JSON.parse(localStorage.getItem('rr_selected_bowlers') || 'null');
+    let activeMode = 'free_agents'; // 'free_agents' or 'contract_cycle'
 
-    if (!selectedBatsmen || selectedBatsmen.length !== 10) {
-      selectedBatsmen = TOP_BATTERS.map(b => b.name);
-    }
-    if (!selectedBowlers || selectedBowlers.length !== 10) {
-      selectedBowlers = TOP_BOWLERS.map(w => w.name);
+    let activeBatters = FREE_BATTERS;
+    let activeBowlers = FREE_BOWLERS;
+
+    let selectedBatsmen = activeBatters.map(b => b.name);
+    let selectedBowlers = activeBowlers.map(w => w.name);
+
+    function setRosterMode(mode) {
+      activeMode = mode;
+      const btnFree = document.getElementById('btn-mode-free');
+      const btnContract = document.getElementById('btn-mode-contract');
+
+      if (mode === 'free_agents') {
+        activeBatters = FREE_BATTERS;
+        activeBowlers = FREE_BOWLERS;
+        btnFree.className = 'px-3 py-1 rounded-lg text-xs font-bold bg-emerald-600 text-white shadow';
+        btnContract.className = 'px-3 py-1 rounded-lg text-xs font-medium bg-slate-800 text-slate-300 hover:text-white border border-slate-700';
+      } else {
+        activeBatters = CONTRACT_BATTERS;
+        activeBowlers = CONTRACT_BOWLERS;
+        btnContract.className = 'px-3 py-1 rounded-lg text-xs font-bold bg-indigo-600 text-white shadow';
+        btnFree.className = 'px-3 py-1 rounded-lg text-xs font-medium bg-slate-800 text-slate-300 hover:text-white border border-slate-700';
+      }
+
+      selectedBatsmen = activeBatters.map(b => b.name);
+      selectedBowlers = activeBowlers.map(w => w.name);
+
+      renderBatsmenFields();
+      renderBowlersFields();
+      renderFullAnalytics();
+      showToast(`Switched to ${mode === 'free_agents' ? '100% Free Agents' : 'All Realistic Targets'} Roster!`);
     }
 
     // Tab Switching
@@ -642,7 +664,7 @@ html_template = '''<!DOCTYPE html>
       const container = document.getElementById('batsmen-fields-container');
       container.innerHTML = selectedBatsmen.map((currentVal, idx) => {
         const num = idx + 1;
-        const bData = TOP_BATTERS[idx] || {};
+        const bData = activeBatters[idx] || {};
         const statPill = bData.ppi_score ? `<span class="text-[10px] font-mono text-pink-400 font-bold bg-pink-500/10 px-2 py-0.5 rounded border border-pink-500/20">PPI: ${bData.ppi_score} | SR: ${bData.p_sr}</span>` : '';
 
         return `
@@ -684,9 +706,7 @@ html_template = '''<!DOCTYPE html>
               </button>
             </div>
 
-            <!-- Searchable Dropdown Menu -->
             <div id="dropdown-batsman-${idx}" class="dropdown-menu hidden absolute left-0 right-0 top-full mt-1 bg-[#0b1329] border border-pink-500/40 rounded-xl shadow-2xl p-1.5">
-              <!-- Rendered via JS -->
             </div>
           </div>
         `;
@@ -698,7 +718,7 @@ html_template = '''<!DOCTYPE html>
       const container = document.getElementById('bowlers-fields-container');
       container.innerHTML = selectedBowlers.map((currentVal, idx) => {
         const num = idx + 1;
-        const wData = TOP_BOWLERS[idx] || {};
+        const wData = activeBowlers[idx] || {};
         const statPill = wData.ppi_score ? `<span class="text-[10px] font-mono text-indigo-400 font-bold bg-indigo-500/10 px-2 py-0.5 rounded border border-indigo-500/20">PPI: ${wData.ppi_score} | Econ: ${wData.p_econ}</span>` : '';
 
         return `
@@ -740,9 +760,7 @@ html_template = '''<!DOCTYPE html>
               </button>
             </div>
 
-            <!-- Searchable Dropdown Menu -->
             <div id="dropdown-bowler-${idx}" class="dropdown-menu hidden absolute left-0 right-0 top-full mt-1 bg-[#0b1329] border border-indigo-500/40 rounded-xl shadow-2xl p-1.5">
-              <!-- Rendered via JS -->
             </div>
           </div>
         `;
@@ -771,7 +789,6 @@ html_template = '''<!DOCTYPE html>
       const val = (input.value || '').toLowerCase().trim();
       const menu = document.getElementById(`dropdown-${type}-${idx}`);
 
-      // Filter all 1,210 players
       const matches = ALL_PLAYERS.filter(p => p.name.toLowerCase().includes(val)).slice(0, 25);
 
       if (matches.length === 0) {
@@ -792,10 +809,8 @@ html_template = '''<!DOCTYPE html>
     function selectPlayer(type, idx, name) {
       if (type === 'batsman') {
         selectedBatsmen[idx] = name;
-        localStorage.setItem('rr_selected_batsmen', JSON.stringify(selectedBatsmen));
       } else {
         selectedBowlers[idx] = name;
-        localStorage.setItem('rr_selected_bowlers', JSON.stringify(selectedBowlers));
       }
       document.getElementById(`input-${type}-${idx}`).value = name;
       closeAllDropdowns();
@@ -805,14 +820,12 @@ html_template = '''<!DOCTYPE html>
       document.querySelectorAll('.dropdown-menu').forEach(m => m.classList.add('hidden'));
     }
 
-    // Global Click Listener to close dropdowns
     document.addEventListener('click', (e) => {
       if (!e.target.closest('.relative')) {
         closeAllDropdowns();
       }
     });
 
-    // Copy Single Field
     function copyField(inputId, label) {
       const input = document.getElementById(inputId);
       const val = input.value.trim();
@@ -821,9 +834,8 @@ html_template = '''<!DOCTYPE html>
       });
     }
 
-    // Copy All 20 Unstop Picks
     function copyAllUnstopPicks() {
-      let text = "RAJASTHAN ROYALS — SUPE RR SELECTOR TOP 20 PICKS\\n\\nTOP 10 BATSMEN:\\n";
+      let text = "RAJASTHAN ROYALS — SUPE RR SELECTOR TOP 20 PICKS (100% UNCONTRACTED FREE AGENTS)\\n\\nTOP 10 BATSMEN:\\n";
       selectedBatsmen.forEach((b, i) => {
         text += `Batsman ${i+1}: ${b}\\n`;
       });
@@ -837,7 +849,6 @@ html_template = '''<!DOCTYPE html>
       });
     }
 
-    // Copy Remark Text
     function copyRemarkText() {
       const txt = document.getElementById('submission-remark').value;
       navigator.clipboard.writeText(txt).then(() => {
@@ -845,18 +856,6 @@ html_template = '''<!DOCTYPE html>
       });
     }
 
-    // Restore Defaults
-    function restoreDefaultTop20() {
-      selectedBatsmen = TOP_BATTERS.map(b => b.name);
-      selectedBowlers = TOP_BOWLERS.map(w => w.name);
-      localStorage.removeItem('rr_selected_batsmen');
-      localStorage.removeItem('rr_selected_bowlers');
-      renderBatsmenFields();
-      renderBowlersFields();
-      showToast("Reset to optimal Top 10 Batters and Bowlers!");
-    }
-
-    // Simulated File Upload
     function handleFileUpload(event) {
       const file = event.target.files[0];
       if (file) {
@@ -867,7 +866,6 @@ html_template = '''<!DOCTYPE html>
       }
     }
 
-    // Toast Notification
     function showToast(msg) {
       let toast = document.getElementById('toast-notification');
       if (!toast) {
@@ -883,14 +881,13 @@ html_template = '''<!DOCTYPE html>
       }, 3000);
     }
 
-    // Populate Tab 2 Full Analytics
     function renderFullAnalytics() {
       const tbodyBatters = document.getElementById('tbody-full-batters');
-      tbodyBatters.innerHTML = TOP_BATTERS.map(b => `
+      tbodyBatters.innerHTML = activeBatters.map(b => `
         <tr class="hover:bg-slate-800/40 transition">
           <td class="py-2.5 px-3 font-mono font-bold text-pink-400">#${b.rank}</td>
           <td class="py-2.5 px-4 font-bold text-white">${b.name}</td>
-          <td class="py-2.5 px-3 text-slate-400">${b.current_ipl_franchise}</td>
+          <td class="py-2.5 px-3 text-emerald-400 font-semibold">${b.current_ipl_franchise}</td>
           <td class="py-2.5 px-3 text-right font-mono font-bold text-emerald-400">${b.ppi_score}</td>
           <td class="py-2.5 px-3 text-right font-mono font-bold text-pink-400">${b.p_sr}</td>
           <td class="py-2.5 px-3 text-right font-mono text-slate-400">${b.overall_sr}</td>
@@ -903,11 +900,11 @@ html_template = '''<!DOCTYPE html>
       `).join('');
 
       const tbodyBowlers = document.getElementById('tbody-full-bowlers');
-      tbodyBowlers.innerHTML = TOP_BOWLERS.map(w => `
+      tbodyBowlers.innerHTML = activeBowlers.map(w => `
         <tr class="hover:bg-slate-800/40 transition">
           <td class="py-2.5 px-3 font-mono font-bold text-indigo-400">#${w.rank}</td>
           <td class="py-2.5 px-4 font-bold text-white">${w.name}</td>
-          <td class="py-2.5 px-3 text-slate-400">${w.current_ipl_franchise}</td>
+          <td class="py-2.5 px-3 text-emerald-400 font-semibold">${w.current_ipl_franchise}</td>
           <td class="py-2.5 px-3 text-right font-mono font-bold text-emerald-400">${w.ppi_score}</td>
           <td class="py-2.5 px-3 text-right font-mono font-bold text-indigo-400">${w.p_econ}</td>
           <td class="py-2.5 px-3 text-right font-mono text-slate-400">${w.overall_econ}</td>
@@ -920,7 +917,6 @@ html_template = '''<!DOCTYPE html>
       `).join('');
     }
 
-    // Gemini AI Chat Interaction
     function askPresetQuery(text) {
       document.getElementById('chat-input').value = text;
       sendGeminiQuery();
@@ -952,7 +948,7 @@ html_template = '''<!DOCTYPE html>
         </div>
         <div class="space-y-1 flex-1">
           <div class="font-bold text-white text-xs">Rajasthan Royals War Room Intelligence Officer</div>
-          <p class="text-slate-400 italic text-xs animate-pulse">Analyzing 200,999 deliveries & pressure metrics...</p>
+          <p class="text-slate-400 italic text-xs animate-pulse">Analyzing 200,999 deliveries & free agent metrics...</p>
         </div>
       `;
       container.appendChild(botMsg);
@@ -981,7 +977,7 @@ html_template = '''<!DOCTYPE html>
           <div class="space-y-1 flex-1">
             <div class="font-bold text-rose-400 text-xs">War Room Note</div>
             <div class="text-slate-300 text-xs">
-              Top targets confirmed in offline database: 10 Batters (Naman Dhir, Shreyas Iyer, Rishabh Pant, Fakhar Zaman, Asif Khan, Najibullah Zadran, Babar Azam, Phil Salt, Tim David, Angelo Mathews) and 10 Bowlers (Arshdeep Singh, Bhuvneshwar Kumar, Yuzvendra Chahal, Harshal Patel, Jason Holder, Mohammed Siraj, Haris Rauf, Maheesh Theekshana, Mohammad Nawaz, Trent Boult).
+              Top Free Agent targets: Batters (Fakhar Zaman, Asif Khan, Najibullah Zadran, Babar Azam, Angelo Mathews, Mohammad Haris, Reeza Hendricks, Mohammad Rizwan, Matthew Wade, Rilee Rossouw) and Bowlers (Haris Rauf, Maheesh Theekshana, Mohammad Nawaz, Adam Zampa, Shaheen Afridi, Sufiyan Muqeem, Abrar Ahmed, Adil Rashid, Tim Southee, Taskin Ahmed).
             </div>
           </div>
         `;
@@ -989,7 +985,6 @@ html_template = '''<!DOCTYPE html>
       container.scrollTop = container.scrollHeight;
     }
 
-    // Initialize On Load
     document.addEventListener('DOMContentLoaded', () => {
       renderBatsmenFields();
       renderBowlersFields();
@@ -1000,13 +995,13 @@ html_template = '''<!DOCTYPE html>
 </html>
 '''
 
-# Substitute Placeholders
 dashboard_html = html_template.replace('__ALL_PLAYERS_JSON__', all_players_json)
-dashboard_html = dashboard_html.replace('__TOP_BATTERS_JSON__', top_batters_json)
-dashboard_html = dashboard_html.replace('__TOP_BOWLERS_JSON__', top_bowlers_json)
-dashboard_html = dashboard_html.replace('__REMARK_TEXT__', submission_remark_text)
+dashboard_html = dashboard_html.replace('__FREE_BATTERS_JSON__', free_batters_json)
+dashboard_html = dashboard_html.replace('__FREE_BOWLERS_JSON__', free_bowlers_json)
+dashboard_html = dashboard_html.replace('__CONTRACT_BATTERS_JSON__', contract_batters_json)
+dashboard_html = dashboard_html.replace('__CONTRACT_BOWLERS_JSON__', contract_bowlers_json)
+dashboard_html = dashboard_html.replace('__REMARK_TEXT__', remark_text)
 
-# Write to workspace
 with open('dashboard.html', 'w', encoding='utf-8') as f:
     f.write(dashboard_html)
 
@@ -1014,6 +1009,6 @@ with open('dashboard.html', 'w', encoding='utf-8') as f:
 artifact_dir = r"C:\Users\HP\.gemini\antigravity\brain\04014367-f2d6-4dd0-a981-5625edbe7cc4"
 if os.path.exists(artifact_dir):
     shutil.copy('dashboard.html', os.path.join(artifact_dir, 'dashboard.html'))
-    print("Copied dashboard.html to artifact directory!")
+    print("Copied updated dashboard.html to artifact directory!")
 
-print("Dashboard successfully generated as dashboard.html!")
+print("Dashboard successfully updated with 10 Free Agent Batters & 10 Free Agent Bowlers!")

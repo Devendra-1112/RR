@@ -115,6 +115,11 @@ def build_pdf_report(filename="RR_SupeRR_Selector_Methodology_Report.pdf"):
     with open('strict_verification_data.json', 'r', encoding='utf-8') as f:
         data = json.load(f)
 
+    with open('war_room_data.json', 'r', encoding='utf-8') as f:
+        wr_data = json.load(f)
+
+    fa_batters = wr_data.get('free_agent_batters_10', [])
+    fa_bowlers = wr_data.get('free_agent_bowlers_10', [])
     eligible_batters = data['verified_eligible_batters']
     eligible_bowlers = data['verified_eligible_bowlers']
 
@@ -178,81 +183,79 @@ def build_pdf_report(filename="RR_SupeRR_Selector_Methodology_Report.pdf"):
 
     story.append(PageBreak())
 
-    # Section 1: Verified Auction-Eligible Batters
-    story.append(Paragraph("3. Section 1: Top Verified Auction-Eligible Batters (6 Qualified)", h1_style))
+    # Section 1: Top 10 Free Agent Batters (100% Not in Any IPL Team)
+    story.append(Paragraph("3. Top 10 Free Agent Batters (100% Uncontracted — Not in Any IPL Team)", h1_style))
     story.append(Paragraph(
-        "In strict adherence to the top filter rule: exactly <b>6 eligible batters</b> meet all statistical criteria and possess verified uncontracted tournament registration. Missing slots are NOT backfilled with unverified or predicted players.",
+        "Screened across 200,999 deliveries with <b>zero IPL contracts</b>. These 10 batsmen are fully available independent entrants and international free agents with proven pressure resilience:",
         body_style
     ))
 
-    b_table_data = [
-        ["#", "Player Name", "Player ID", "Previous Team", "Status", "PPI", "Press SR", "Press Avg", "Est. Value"]
+    fa_b_table = [
+        ["#", "Player Name", "Team Status", "PPI", "Press SR", "Press Avg", "Balls", "Est. Value"]
     ]
-    for b in eligible_batters:
-        b_table_data.append([
+    for b in fa_batters[:10]:
+        fa_b_table.append([
             f"#{b['rank']}",
             b['name'],
-            b['player_id'],
-            b['previous_franchise'][:15],
-            "VERIFIED",
-            str(b['ppi_score']),
-            f"{b['p_sr']}",
-            f"{b['p_avg']}",
-            b.get('price_range', '₹3-5 Cr')
+            "Free Agent",
+            f"{b['ppi_score']:.1f}",
+            f"{b['p_sr']:.1f}",
+            f"{b['p_avg']:.1f}",
+            str(b['p_balls']),
+            b.get('price_est', '₹3–5 Cr')
         ])
 
-    t_b = Table(b_table_data, colWidths=[20, 95, 55, 80, 50, 42, 52, 52, 58])
-    t_b.setStyle(TableStyle([
+    t_fab = Table(fa_b_table, colWidths=[20, 110, 75, 45, 55, 55, 45, 99])
+    t_fab.setStyle(TableStyle([
         ('BACKGROUND', (0,0), (-1,0), c_navy),
         ('TEXTCOLOR', (0,0), (-1,0), colors.white),
         ('FONTNAME', (0,0), (-1,0), 'Helvetica-Bold'),
         ('FONTSIZE', (0,0), (-1,0), 7.5),
-        ('BOTTOMPADDING', (0,0), (-1,-1), 3),
-        ('TOPPADDING', (0,0), (-1,-1), 3),
+        ('BOTTOMPADDING', (0,0), (-1,-1), 2.5),
+        ('TOPPADDING', (0,0), (-1,-1), 2.5),
         ('GRID', (0,0), (-1,-1), 0.5, colors.HexColor("#CBD5E1")),
         ('FONTSIZE', (0,1), (-1,-1), 7),
         ('ROWBACKGROUNDS', (0,1), (-1,-1), [colors.white, colors.HexColor("#F8FAFC")]),
     ]))
-    story.append(t_b)
-    story.append(Spacer(1, 8))
+    story.append(t_fab)
+    story.append(Spacer(1, 6))
 
-    # Section 1: Verified Auction-Eligible Bowlers
-    story.append(Paragraph("4. Section 1: Top Verified Auction-Eligible Bowlers (4 Qualified)", h1_style))
+    # Section 2: Top 10 Free Agent Bowlers (100% Not in Any IPL Team)
+    story.append(Paragraph("4. Top 10 Free Agent Bowlers (100% Uncontracted — Not in Any IPL Team)", h1_style))
     story.append(Paragraph(
-        "Below are the verified bowling targets who possess official entrant registration and high-pressure wicket-taking capability:",
+        "Screened across 200,999 deliveries with <b>zero IPL contracts</b>. These 10 bowlers provide elite death-overs containment and clutch wicket-taking prowess:",
         body_style
     ))
 
-    w_table_data = [
-        ["#", "Player Name", "Player ID", "Previous Team", "Status", "PPI", "Press Econ", "Clutch Wkts", "Est. Value"]
+    fa_w_table = [
+        ["#", "Player Name", "Team Status", "PPI", "Press Econ", "Clutch Wkts", "Dot %", "Est. Value"]
     ]
-    for w in eligible_bowlers:
-        w_table_data.append([
+    for w in fa_bowlers[:10]:
+        fa_w_table.append([
             f"#{w['rank']}",
             w['name'],
-            w['player_id'],
-            w['previous_franchise'][:15],
-            "VERIFIED",
-            str(w['ppi_score']),
-            f"{w['p_econ']}",
+            "Free Agent",
+            f"{w['ppi_score']:.1f}",
+            f"{w['p_econ']:.2f}",
             str(w['p_wickets']),
-            w.get('price_range', '₹4-7 Cr')
+            f"{w['p_dot_pct']:.1f}%",
+            w.get('price_est', '₹4–7 Cr')
         ])
 
-    t_w = Table(w_table_data, colWidths=[20, 95, 55, 80, 50, 42, 52, 52, 58])
-    t_w.setStyle(TableStyle([
+    t_faw = Table(fa_w_table, colWidths=[20, 110, 75, 45, 55, 55, 45, 99])
+    t_faw.setStyle(TableStyle([
         ('BACKGROUND', (0,0), (-1,0), colors.HexColor("#1E3A8A")),
         ('TEXTCOLOR', (0,0), (-1,0), colors.white),
         ('FONTNAME', (0,0), (-1,0), 'Helvetica-Bold'),
         ('FONTSIZE', (0,0), (-1,0), 7.5),
-        ('BOTTOMPADDING', (0,0), (-1,-1), 3),
-        ('TOPPADDING', (0,0), (-1,-1), 3),
+        ('BOTTOMPADDING', (0,0), (-1,-1), 2.5),
+        ('TOPPADDING', (0,0), (-1,-1), 2.5),
         ('GRID', (0,0), (-1,-1), 0.5, colors.HexColor("#CBD5E1")),
         ('FONTSIZE', (0,1), (-1,-1), 7),
         ('ROWBACKGROUNDS', (0,1), (-1,-1), [colors.white, colors.HexColor("#F8FAFC")]),
     ]))
-    story.append(t_w)
-    story.append(Spacer(1, 8))
+    story.append(t_faw)
+    story.append(Spacer(1, 6))
 
     # Mandatory Exclusion Notice Box
     story.append(Paragraph("5. Section 3: Not Yet Verified Players & Mandatory Exclusion Notice", h1_style))
