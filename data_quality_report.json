@@ -1,0 +1,23 @@
+{
+  "total_deliveries_processed": 200999,
+  "ipl_deliveries": 87687,
+  "t20i_deliveries": 113312,
+  "wides_count": 7714,
+  "noballs_count": 576,
+  "total_wickets_recorded": 10881,
+  "bowler_credited_wickets": 10272,
+  "non_bowler_dismissals": 609,
+  "pressure_deliveries_total": 81722,
+  "pressure_percentage": 40.66,
+  "dismissal_breakdown": {
+    "Bowled": 1775,
+    "Caught": 7557,
+    "Stump": 214,
+    "RunOut": 600,
+    "LBW": 709,
+    "Retire Out": 6,
+    "Hit Wicket": 17,
+    "Obstracting the field": 2,
+    "Obstructing the field": 1
+  }
+}

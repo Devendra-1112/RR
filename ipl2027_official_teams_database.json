@@ -3204,36 +3204,89 @@
       "final_squad_size": 25,
       "final_overseas_count": 7
     },
-    "scenario_b_newball_swing": {
-      "name": "Powerplay Wickets & Explosive Middle Order",
+    "scenario_b_bowling_dominant": {
+      "name": "Bowling Dominant: Pathirana & Boult Double Spearhead",
       "purchases": [
+        {
+          "name": "Matheesha Pathirana",
+          "type": "Overseas",
+          "role": "Sling Death Specialist",
+          "bid": 10.5,
+          "walk_away": 12.0
+        },
         {
           "name": "Trent Boult",
           "type": "Overseas",
-          "role": "Powerplay Swing",
-          "bid": 7.0,
+          "role": "Powerplay Swing Spearhead",
+          "bid": 7.5,
           "walk_away": 8.5
         },
         {
+          "name": "Ajinkya Rahane",
+          "type": "Indian",
+          "role": "No. 3 Anchor",
+          "bid": 2.5,
+          "walk_away": 3.5
+        },
+        {
+          "name": "Mahipal Lomror",
+          "type": "Indian",
+          "role": "Middle Order Power",
+          "bid": 2.5,
+          "walk_away": 3.5
+        },
+        {
+          "name": "Abishek Porel",
+          "type": "Indian",
+          "role": "Backup Keeper",
+          "bid": 2.2,
+          "walk_away": 3.0
+        },
+        {
+          "name": "Asif Khan",
+          "type": "Overseas",
+          "role": "Power Finisher",
+          "bid": 1.5,
+          "walk_away": 2.0
+        }
+      ],
+      "total_spend": 26.7,
+      "purse_remaining": 0.35,
+      "overseas_bought": 3,
+      "indian_bought": 3,
+      "final_squad_size": 25,
+      "final_overseas_count": 8
+    },
+    "scenario_c_batting_heavy": {
+      "name": "Batting Firepower & Indian Seam Enforcer",
+      "purchases": [
+        {
           "name": "Nitish Rana",
           "type": "Indian",
-          "role": "Middle Order",
-          "bid": 5.5,
-          "walk_away": 7.0
+          "role": "Middle Order Spin Destroyer",
+          "bid": 6.5,
+          "walk_away": 7.5
         },
         {
-          "name": "Rahul Tripathi",
+          "name": "Nehal Wadhera",
           "type": "Indian",
-          "role": "No. 3 Striker",
-          "bid": 3.5,
-          "walk_away": 4.5
+          "role": "Left-Hand Clutch Finisher",
+          "bid": 6.0,
+          "walk_away": 7.5
         },
         {
-          "name": "Akash Deep",
+          "name": "Avesh Khan",
           "type": "Indian",
-          "role": "Seam Backup",
-          "bid": 3.0,
-          "walk_away": 4.0
+          "role": "Hit-the-Deck Death Seamer",
+          "bid": 6.5,
+          "walk_away": 7.5
+        },
+        {
+          "name": "Ajinkya Rahane",
+          "type": "Indian",
+          "role": "No. 3 Anchor",
+          "bid": 2.5,
+          "walk_away": 3.5
         },
         {
           "name": "Abishek Porel",
@@ -3250,12 +3303,12 @@
           "walk_away": 2.0
         }
       ],
-      "total_spend": 23.0,
-      "purse_remaining": 4.05,
-      "overseas_bought": 2,
-      "indian_bought": 4,
+      "total_spend": 25.5,
+      "purse_remaining": 1.55,
+      "overseas_bought": 1,
+      "indian_bought": 5,
       "final_squad_size": 25,
-      "final_overseas_count": 7
+      "final_overseas_count": 6
     }
   },
   "playing_xi": {
