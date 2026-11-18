@@ -1,6 +1,4 @@
 import json
-import collections
-import collections.abc
 from pptx import Presentation
 from pptx.util import Inches, Pt
 from pptx.dml.color import RGBColor
@@ -25,11 +23,16 @@ def create_deck():
     RR_ACCENT_BLUE = RGBColor(59, 130, 246)
     RR_BORDER = RGBColor(40, 60, 100)
 
-    with open('strict_verification_data.json', 'r', encoding='utf-8') as f:
-        data = json.load(f)
+    with open('ipl2027_official_teams_database.json', 'r', encoding='utf-8') as f:
+        db = json.load(f)
 
-    eligible_batters = data['verified_eligible_batters']
-    eligible_bowlers = data['verified_eligible_bowlers']
+    meta = db['metadata']
+    top_batters = db['top_10_batters']
+    top_bowlers = db['top_10_bowlers']
+    franchises = db['franchises']
+    rr_squad = db['rr_retained_squad']
+    budget_a = db['budget_scenarios']['scenario_a_balanced']
+    playing_xi = db['playing_xi']
 
     def add_bg(slide):
         bg = slide.shapes.add_shape(MSO_SHAPE.RECTANGLE, 0, 0, prs.slide_width, prs.slide_height)
@@ -96,7 +99,7 @@ def create_deck():
     p1.space_after = Pt(10)
 
     p2 = tf1.add_paragraph()
-    p2.text = "Strict Zero-Predictions Standard • Grounded in Official BCCI/IPL Ratification"
+    p2.text = "Official 18 November 2026 BCCI Retention & Trade Baseline • ITC Grand Goa (16-Dec-2026)"
     p2.font.size = Pt(18)
     p2.font.color.rgb = RR_MUTED
 
@@ -104,417 +107,266 @@ def create_deck():
     tbox_meta = s1.shapes.add_textbox(Inches(1.2), Inches(5.35), Inches(10.9), Inches(1.1))
     tf_m = tbox_meta.text_frame
     p_m1 = tf_m.paragraphs[0]
-    p_m1.text = "SupeRR Selector Season 2 • Round 1 Official Submission"
+    p_m1.text = "SupeRR Selector Season 2 • Round 1 Official Strategy Presentation"
     p_m1.font.size = Pt(13)
     p_m1.font.bold = True
     p_m1.font.color.rgb = RR_PINK
     p_m2 = tf_m.add_paragraph()
-    p_m2.text = "200,999 Balls Screened • 81,722 Pressure Deliveries • Nov 17, 2026 BCCI Deadline Compliance • Dec 16, 2026 Auction (Goa)"
+    p_m2.text = "200,999 Balls Screened • 81,722 Pressure Deliveries • 184 Retained Players Excluded • RR Purse: ₹27.05 Cr (6 Slots Left)"
     p_m2.font.size = Pt(11)
     p_m2.font.color.rgb = RR_WHITE
 
-    # SLIDE 2: STRICT GOVERNANCE & 3-STATUS TAXONOMY
+    # SLIDE 2: 18-NOV-2026 RETENTION & RELEASE AUDIT
     s2 = prs.slides.add_slide(blank_layout)
     add_bg(s2)
-    add_header(s2, "Strict Zero-Predictions Standard & Status Taxonomy", "AUCTION GOVERNANCE PROTOCOL")
+    add_header(s2, "Official IPL 2027 Retention & Release Ecosystem (18-Nov-2026)", "TOURNAMENT LANDSCAPE")
 
-    c1 = add_card(s2, Inches(0.8), Inches(1.6), Inches(3.7), Inches(5.2), border_color=RR_ACCENT_GREEN)
-    tb1 = s2.shapes.add_textbox(Inches(1.0), Inches(1.8), Inches(3.3), Inches(4.8))
-    tf_c1 = tb1.text_frame
-    tf_c1.word_wrap = True
-    p = tf_c1.paragraphs[0]
-    p.text = "CATEGORY A: VERIFIED ELIGIBLE"
+    # 4 metric boxes
+    m_box_w = Inches(2.75)
+    metrics = [
+        ("184 PLAYERS", "RETAINED ACROSS 10 TEAMS", RR_PINK),
+        ("89 PLAYERS", "OFFICIALLY RELEASED", RR_ACCENT_GREEN),
+        ("₹297.95 CR", "TOTAL COMBINED PURSE", RR_ACCENT_BLUE),
+        ("ITC GRAND GOA", "MINI-AUCTION (16-DEC-2026)", RR_ACCENT_AMBER)
+    ]
+    for idx, (val, lbl, clr) in enumerate(metrics):
+        left_m = Inches(0.8 + idx * 2.95)
+        add_card(s2, left_m, Inches(1.6), m_box_w, Inches(1.2), border_color=clr)
+        tb_m = s2.shapes.add_textbox(left_m + Inches(0.1), Inches(1.7), m_box_w - Inches(0.2), Inches(1.0))
+        tf = tb_m.text_frame
+        p = tf.paragraphs[0]
+        p.text = val
+        p.font.size = Pt(20)
+        p.font.bold = True
+        p.font.color.rgb = clr
+        p = tf.add_paragraph()
+        p.text = lbl
+        p.font.size = Pt(9)
+        p.font.color.rgb = RR_WHITE
+
+    # Big Summary Card
+    add_card(s2, Inches(0.8), Inches(3.0), Inches(11.7), Inches(3.8))
+    tb_summary = s2.shapes.add_textbox(Inches(1.0), Inches(3.2), Inches(11.3), Inches(3.4))
+    tf_sum = tb_summary.text_frame
+    tf_sum.word_wrap = True
+    p = tf_sum.paragraphs[0]
+    p.text = "MAJOR RETENTION & TRADE SHAKE-UPS ACROSS 10 FRANCHISES"
     p.font.size = Pt(13)
     p.font.bold = True
-    p.font.color.rgb = RR_ACCENT_GREEN
+    p.font.color.rgb = RR_PINK
     p.space_after = Pt(8)
-    p = tf_c1.add_paragraph()
-    p.text = "• Officially confirmed uncontracted international / associate entrants.\n• Verified registration in IPL 2027 auction pool.\n• Independent free agents with no active IPL contract.\n• Exactly 6 Batters & 4 Bowlers qualify under statistical filters.\n• Strictly realistic targets RR can legally acquire."
+    p = tf_sum.add_paragraph()
+    p.text = (
+        "• Landmark Trades: Hardik Pandya (to PBKS for ₹18 Cr) swapped for Arshdeep Singh (to MI for ₹18 Cr). Sanju Samson traded to CSK; Rishabh Pant traded to DC; Kuldeep Yadav traded to LSG (₹13.5 Cr).\n"
+        "• Rajasthan Royals Blockbuster Inflow: Acquired Ravindra Jadeja (from CSK) and Mohammed Shami (from SRH/LSG) alongside Sandeep Sharma, Jofra Archer, and Ravi Bishnoi.\n"
+        "• Star Releases Entering Auction Pool: Matheesha Pathirana (released by KKR, ₹18 Cr freed), Trent Boult (released by MI), Mitchell Starc (released by DC), Shimron Hetmyer (released by RR), Avesh Khan (released by LSG, ₹9.75 Cr freed), Nitish Rana (DC), Nehal Wadhera (PBKS), Ajinkya Rahane (KKR), and Deepak Chahar (MI).\n"
+        "• Strict Governance Standard: All 184 retained players are 100% EXCLUDED from auction target lists. Bidding on retained or retired players is contractually impossible."
+    )
     p.font.size = Pt(11)
     p.font.color.rgb = RR_WHITE
 
-    c2 = add_card(s2, Inches(4.8), Inches(1.6), Inches(3.7), Inches(5.2), border_color=RR_ACCENT_ROSE)
-    tb2 = s2.shapes.add_textbox(Inches(5.0), Inches(1.8), Inches(3.3), Inches(4.8))
-    tf_c2 = tb2.text_frame
-    tf_c2.word_wrap = True
-    p = tf_c2.paragraphs[0]
-    p.text = "CATEGORY B: VERIFIED UNAVAILABLE"
-    p.font.size = Pt(13)
-    p.font.bold = True
-    p.font.color.rgb = RR_ACCENT_ROSE
-    p.space_after = Pt(8)
-    p = tf_c2.add_paragraph()
-    p.text = "• Formally Retained Marquee Cores (Bumrah ₹18 Cr, Kohli ₹21 Cr, Klaasen ₹23 Cr, Gaikwad ₹18 Cr, Rashid Khan ₹18 Cr).\n• Formally Retired (Dhawan, Karthik).\n• RR Retained Core (Samson, Jaiswal, Parag, Jurel, Hetmyer, Sandeep Sharma).\n• Legally bound; strictly non-purchasable. Bidding prohibited."
-    p.font.size = Pt(11)
-    p.font.color.rgb = RR_WHITE
-
-    c3 = add_card(s2, Inches(8.8), Inches(1.6), Inches(3.7), Inches(5.2), border_color=RR_ACCENT_AMBER)
-    tb3 = s2.shapes.add_textbox(Inches(9.0), Inches(1.8), Inches(3.3), Inches(4.8))
-    tf_c3 = tb3.text_frame
-    tf_c3.word_wrap = True
-    p = tf_c3.paragraphs[0]
-    p.text = "CATEGORY C: NOT YET VERIFIED"
-    p.font.size = Pt(13)
-    p.font.bold = True
-    p.font.color.rgb = RR_ACCENT_AMBER
-    p.space_after = Pt(8)
-    p = tf_c3.add_paragraph()
-    p.text = "• Contracted IPL 2026 players (Arshdeep, Pant, Shreyas, Naman Dhir, Shashank, Bhuvneshwar).\n• Official BCCI retention/release deadline extended to Nov 17, 2026.\n• Release lists not yet published.\n• Mandatory Notice: OFFICIAL IPL 2027 AUCTION ELIGIBILITY NOT YET ESTABLISHED — EXCLUDED FROM RECOMMENDATIONS."
-    p.font.size = Pt(11)
-    p.font.color.rgb = RR_WHITE
-
-    # SLIDE 3: DATASET RIGOR & PPI METHODOLOGY
+    # SLIDE 3: RR SQUAD (19 RETAINED) & GAPS
     s3 = prs.slides.add_slide(blank_layout)
     add_bg(s3)
-    add_header(s3, "Comprehensive Dataset Rigor & Pressure Performance Index (PPI)", "DATA SCIENCE METHODOLOGY")
+    add_header(s3, "Rajasthan Royals 19 Retained Players & Squad Gap Analysis", "RR ROSTER AUDIT")
 
-    card_d1 = add_card(s3, Inches(0.8), Inches(1.6), Inches(5.7), Inches(5.2))
-    tb_d1 = s3.shapes.add_textbox(Inches(1.0), Inches(1.8), Inches(5.3), Inches(4.8))
-    tf_d1 = tb_d1.text_frame
-    tf_d1.word_wrap = True
-    p = tf_d1.paragraphs[0]
-    p.text = "DATA PREPROCESSING & LEGAL BALL ACCOUNTING"
-    p.font.size = Pt(13)
-    p.font.bold = True
-    p.font.color.rgb = RR_PINK
-    p.space_after = Pt(8)
-    p = tf_d1.add_paragraph()
-    p.text = (
-        "• Total Deliveries Analyzed: 200,999 across 883 matches (371 IPL + 512 T20Is).\n"
-        "• Pressure Deliveries Identified: 81,722 high-leverage balls.\n"
-        "• Innings 1 totals tracked delivery-by-delivery to determine live Required Run Rates (RRR).\n"
-        "• Extras Handling: Wides and oversteps excluded from batter balls faced; wides excluded from bowler legal balls; penalty and extra runs strictly charged to bowler bowling economy.\n"
-        "• Dismissal Validity: Run-outs excluded from bowler wickets; only Bowled, Caught, LBW, Stumped, Caught & Bowled, and Hit Wicket counted."
-    )
-    p.font.size = Pt(11)
-    p.font.color.rgb = RR_WHITE
-
-    card_d2 = add_card(s3, Inches(6.8), Inches(1.6), Inches(5.7), Inches(5.2))
-    tb_d2 = s3.shapes.add_textbox(Inches(7.0), Inches(1.8), Inches(5.3), Inches(4.8))
-    tf_d2 = tb_d2.text_frame
-    tf_d2.word_wrap = True
-    p = tf_d2.paragraphs[0]
-    p.text = "MULTI-DIMENSIONAL PRESSURE PERFORMANCE INDEX"
-    p.font.size = Pt(13)
-    p.font.bold = True
-    p.font.color.rgb = RR_ACCENT_BLUE
-    p.space_after = Pt(8)
-    p = tf_d2.add_paragraph()
-    p.text = (
-        "• Pressure Condition Definitions:\n"
-        "  1. Death overs (16–20) in 1st & 2nd innings.\n"
-        "  2. Steep Chases (RRR >= 9.80, or <= 36 balls with >= 35 runs needed).\n"
-        "  3. Collapse Rescue (<= 6 overs with >= 3 wickets down).\n"
-        "  4. Knockout Matches (Overs 12–20 in playoffs / finals).\n\n"
-        "• Batter PPI Formula: Weighted sum of Pressure Strike Rate (0.35), Pressure Average (0.35), SR Delta vs Baseline (0.35), and Dot-Ball Suppression (0.40).\n\n"
-        "• Bowler PPI Formula: Weighted sum of Pressure Economy (7.0), Clutch Wickets (2.0), Dot Ball % (0.6), and Economy Delta vs Baseline (3.0).\n\n"
-        "• Reliability Scaling: Sample size dampener applies sqrt(balls/180) to prevent small-sample distortion."
-    )
-    p.font.size = Pt(10.5)
-    p.font.color.rgb = RR_WHITE
-
-    # SLIDE 4: SECTION 1 — TOP 6 VERIFIED BATTERS
-    s4 = prs.slides.add_slide(blank_layout)
-    add_bg(s4)
-    add_header(s4, "Section 1: Top 6 Verified Auction-Eligible Batters", "TARGET RECOMMENDATIONS")
-
-    # Table of 6 Batters
-    rows = len(eligible_batters) + 1
-    cols = 9
-    table_shape = s4.shapes.add_table(rows, cols, Inches(0.8), Inches(1.6), Inches(11.7), Inches(5.2))
-    tbl = table_shape.table
-    tbl.columns[0].width = Inches(0.6)
-    tbl.columns[1].width = Inches(1.8)
-    tbl.columns[2].width = Inches(1.4)
-    tbl.columns[3].width = Inches(1.1)
-    tbl.columns[4].width = Inches(1.1)
-    tbl.columns[5].width = Inches(1.1)
-    tbl.columns[6].width = Inches(1.1)
-    tbl.columns[7].width = Inches(1.3)
-    tbl.columns[8].width = Inches(2.2)
-
-    headers = ["#", "Player Name", "Player ID", "PPI Score", "Press SR", "Press Avg", "Press Balls", "Est. Value", "RR Tactical Fit & Role"]
-    for j, h in enumerate(headers):
-        cell = tbl.cell(0, j)
-        cell.text = h
-        cell.fill.solid()
-        cell.fill.fore_color.rgb = RR_CARD_BG
-        for p in cell.text_frame.paragraphs:
-            p.font.size = Pt(10)
-            p.font.bold = True
-            p.font.color.rgb = RR_PINK
-
-    for i, b in enumerate(eligible_batters, 1):
-        vals = [
-            f"#{b['rank']}",
-            b['name'],
-            b['player_id'],
-            str(b['ppi_score']),
-            f"{b['p_sr']}",
-            f"{b['p_avg']}",
-            str(b['p_balls']),
-            b.get('price_range', '₹3-5 Cr'),
-            b.get('why_target', 'Pressure enforcer')[:45] + '...'
-        ]
-        for j, v in enumerate(vals):
-            cell = tbl.cell(i, j)
-            cell.text = v
-            cell.fill.solid()
-            cell.fill.fore_color.rgb = RR_DARK if i % 2 == 0 else RR_CARD_BG
-            for p in cell.text_frame.paragraphs:
-                p.font.size = Pt(9.5)
-                p.font.color.rgb = RR_WHITE
-                if j in (0, 3): p.font.bold = True
-
-    # SLIDE 5: SECTION 1 — TOP 4 VERIFIED BOWLERS
-    s5 = prs.slides.add_slide(blank_layout)
-    add_bg(s5)
-    add_header(s5, "Section 1: Top 4 Verified Auction-Eligible Bowlers", "TARGET RECOMMENDATIONS")
-
-    rows = len(eligible_bowlers) + 1
-    cols = 9
-    table_shape5 = s5.shapes.add_table(rows, cols, Inches(0.8), Inches(1.6), Inches(11.7), Inches(3.8))
-    tbl5 = table_shape5.table
-    tbl5.columns[0].width = Inches(0.6)
-    tbl5.columns[1].width = Inches(1.8)
-    tbl5.columns[2].width = Inches(1.4)
-    tbl5.columns[3].width = Inches(1.1)
-    tbl5.columns[4].width = Inches(1.1)
-    tbl5.columns[5].width = Inches(1.1)
-    tbl5.columns[6].width = Inches(1.1)
-    tbl5.columns[7].width = Inches(1.3)
-    tbl5.columns[8].width = Inches(2.2)
-
-    headers5 = ["#", "Player Name", "Player ID", "PPI Score", "Press Econ", "Clutch Wkts", "Press Balls", "Est. Value", "RR Tactical Fit & Role"]
-    for j, h in enumerate(headers5):
-        cell = tbl5.cell(0, j)
-        cell.text = h
-        cell.fill.solid()
-        cell.fill.fore_color.rgb = RR_CARD_BG
-        for p in cell.text_frame.paragraphs:
-            p.font.size = Pt(10)
-            p.font.bold = True
-            p.font.color.rgb = RR_ACCENT_BLUE
-
-    for i, w in enumerate(eligible_bowlers, 1):
-        vals = [
-            f"#{w['rank']}",
-            w['name'],
-            w['player_id'],
-            str(w['ppi_score']),
-            f"{w['p_econ']}",
-            f"{w['p_wickets']}",
-            str(w['p_balls']),
-            w.get('price_range', '₹4-7 Cr'),
-            w.get('why_target', 'Clutch bowler')[:45] + '...'
-        ]
-        for j, v in enumerate(vals):
-            cell = tbl5.cell(i, j)
-            cell.text = v
-            cell.fill.solid()
-            cell.fill.fore_color.rgb = RR_DARK if i % 2 == 0 else RR_CARD_BG
-            for p in cell.text_frame.paragraphs:
-                p.font.size = Pt(9.5)
-                p.font.color.rgb = RR_WHITE
-                if j in (0, 3): p.font.bold = True
-
-    # Callout card on why 6 batters and 4 bowlers
-    c_note = add_card(s5, Inches(0.8), Inches(5.6), Inches(11.7), Inches(1.3), border_color=RR_ACCENT_GREEN)
-    tb_cn = s5.shapes.add_textbox(Inches(1.0), Inches(5.7), Inches(11.3), Inches(1.1))
-    tf_cn = tb_cn.text_frame
-    tf_cn.word_wrap = True
-    p = tf_cn.paragraphs[0]
-    p.text = "STRICT AUDIT INTEGRITY: ZERO BACKFILLING OF MISSING POSITIONS"
-    p.font.size = Pt(11)
-    p.font.bold = True
-    p.font.color.rgb = RR_ACCENT_GREEN
-    p = tf_cn.add_paragraph()
-    p.text = "Per strict war room rules, if only 6 eligible batters and 4 eligible bowlers satisfy the verified uncontracted registration and minimum delivery criteria, display ONLY those players. Missing positions are never padded with unverified, contracted, or predicted players."
-    p.font.size = Pt(10)
-    p.font.color.rgb = RR_WHITE
-
-    # SLIDE 6: SECTION 2 — VERIFIED UNAVAILABLE PLAYERS
-    s6 = prs.slides.add_slide(blank_layout)
-    add_bg(s6)
-    add_header(s6, "Section 2: Verified Unavailable Players (Retained / Retired)", "LEGAL EXCLUSION AUDIT")
-
-    c_un1 = add_card(s6, Inches(0.8), Inches(1.6), Inches(5.7), Inches(5.2), border_color=RR_ACCENT_ROSE)
-    tb_un1 = s6.shapes.add_textbox(Inches(1.0), Inches(1.8), Inches(5.3), Inches(4.8))
-    tf_un1 = tb_un1.text_frame
-    tf_un1.word_wrap = True
-    p = tf_un1.paragraphs[0]
-    p.text = "CONFIRMED MARQUEE RETENTIONS (NON-PURCHASABLE)"
-    p.font.size = Pt(12)
-    p.font.bold = True
-    p.font.color.rgb = RR_ACCENT_ROSE
-    p.space_after = Pt(8)
-    p = tf_un1.add_paragraph()
-    p.text = (
-        "• Jasprit Bumrah (Mumbai Indians) — Retained Marquee Core (₹18 Cr)\n"
-        "• Virat Kohli (Royal Challengers Bengaluru) — Retained Core (₹21 Cr)\n"
-        "• Heinrich Klaasen (Sunrisers Hyderabad) — Retained Marquee Core (₹23 Cr)\n"
-        "• Ruturaj Gaikwad & Ravindra Jadeja (CSK) — Retained Cores (₹18 Cr each)\n"
-        "• Rashid Khan (Gujarat Titans) — Retained Core (₹18 Cr)\n"
-        "• Sunil Narine & Andre Russell (KKR) — Retained Cores (₹12 Cr each)\n"
-        "• Axar Patel & Kuldeep Yadav (DC) — Retained Cores (₹16.5 & ₹13.25 Cr)\n"
-        "• Nicholas Pooran (LSG) — Retained Core (₹21 Cr)\n\n"
-        "LEGAL RESTRICTION: Contractually bound under formal BCCI IPL retention documents. Excluded from auction pool."
-    )
-    p.font.size = Pt(10)
-    p.font.color.rgb = RR_WHITE
-
-    c_un2 = add_card(s6, Inches(6.8), Inches(1.6), Inches(5.7), Inches(5.2), border_color=RR_BORDER)
-    tb_un2 = s6.shapes.add_textbox(Inches(7.0), Inches(1.8), Inches(5.3), Inches(4.8))
-    tf_un2 = tb_un2.text_frame
-    tf_un2.word_wrap = True
-    p = tf_un2.paragraphs[0]
-    p.text = "OFFICIALLY RETIRED PLAYERS & RR RETAINED CORE"
-    p.font.size = Pt(12)
-    p.font.bold = True
-    p.font.color.rgb = RR_PINK
-    p.space_after = Pt(8)
-    p = tf_un2.add_paragraph()
-    p.text = (
-        "• Shikhar Dhawan: Officially announced retirement from all international, domestic, and IPL cricket on 24-08-2024. Ineligible for auction.\n\n"
-        "• Dinesh Karthik: Formally retired post IPL 2024; appointed Royal Challengers Bengaluru Batting Coach and Mentor on 01-06-2024.\n\n"
-        "• Rajasthan Royals Internal Retentions:\n"
-        "  - Sanju Samson (Captain, ₹18 Cr)\n"
-        "  - Yashasvi Jaiswal (Opener, ₹18 Cr)\n"
-        "  - Riyan Parag (Middle Order, ₹14 Cr)\n"
-        "  - Dhruv Jurel (Finisher / Keeper, ₹14 Cr)\n"
-        "  - Shimron Hetmyer (Overseas Finisher, ₹11 Cr)\n"
-        "  - Sandeep Sharma (Death Specialist, ₹4 Cr Uncapped)\n"
-        "  Total Committed Retained Purse: ₹79.0 Crore."
-    )
-    p.font.size = Pt(10)
-    p.font.color.rgb = RR_WHITE
-
-    # SLIDE 7: SECTION 3 — NOT YET VERIFIED PLAYERS
-    s7 = prs.slides.add_slide(blank_layout)
-    add_bg(s7)
-    add_header(s7, "Section 3: Not Yet Verified Players (Pending Nov 17 BCCI Deadline)", "GOVERNANCE COMPLIANCE")
-
-    c_pen = add_card(s7, Inches(0.8), Inches(1.6), Inches(11.7), Inches(5.2), border_color=RR_ACCENT_AMBER)
-    tb_pen = s7.shapes.add_textbox(Inches(1.1), Inches(1.8), Inches(11.1), Inches(4.8))
-    tf_pen = tb_pen.text_frame
-    tf_pen.word_wrap = True
-    p = tf_pen.paragraphs[0]
-    p.text = "MANDATORY COMPLIANCE NOTICE: AWAITING FORMAL BCCI RELEASE RATIFICATION"
-    p.font.size = Pt(13)
-    p.font.bold = True
-    p.font.color.rgb = RR_ACCENT_AMBER
-    p.space_after = Pt(10)
-    p = tf_pen.add_paragraph()
-    p.text = (
-        "OFFICIAL IPL 2027 AUCTION ELIGIBILITY NOT YET ESTABLISHED — PLAYER EXCLUDED FROM FINAL RECOMMENDATIONS.\n\n"
-        "• Regulatory Context:\n"
-        "  The Board of Control for Cricket in India (BCCI) officially extended the franchise retention and release submission deadline to November 17, 2026. The mini-auction is scheduled for December 16, 2026 in Goa, with an updated team purse of ₹157.0 Crore.\n\n"
-        "• Audit Treatment of Contracted Players:\n"
-        "  Players currently associated with IPL 2026 squads (including Arshdeep Singh, Shreyas Iyer, Rishabh Pant, KL Rahul, Naman Dhir, Shashank Singh, Bhuvneshwar Kumar, Mohammed Siraj, and Harshal Patel) have NOT yet been officially released by their franchises.\n\n"
-        "• Zero Speculation Standard:\n"
-        "  Under strict war room rules, a player's recent form, age, squad omission, or media rumours DO NOT constitute evidence of release. Until the BCCI officially publishes and ratifies the 2027 release list on November 17, these players are categorized strictly as NOT YET VERIFIED and excluded from target recommendations."
-    )
-    p.font.size = Pt(11)
-    p.font.color.rgb = RR_WHITE
-
-    # SLIDE 8: SECTION 4 — EVIDENCE REGISTRY & SOURCES
-    s8 = prs.slides.add_slide(blank_layout)
-    add_bg(s8)
-    add_header(s8, "Section 4: Authoritative Eligibility Evidence Registry", "EVIDENCE REPOSITORY")
-
-    c_ev1 = add_card(s8, Inches(0.8), Inches(1.6), Inches(3.7), Inches(5.2))
-    tb_ev1 = s8.shapes.add_textbox(Inches(1.0), Inches(1.8), Inches(3.3), Inches(4.8))
-    tf_ev1 = tb_ev1.text_frame
-    tf_ev1.word_wrap = True
-    p = tf_ev1.paragraphs[0]
-    p.text = "PRIMARY SOURCE 1: BCCI"
-    p.font.size = Pt(12)
-    p.font.bold = True
-    p.font.color.rgb = RR_PINK
-    p.space_after = Pt(8)
-    p = tf_ev1.add_paragraph()
-    p.text = (
-        "• Source: Official BCCI Portal (bcci.tv)\n"
-        "• Articles Audited:\n"
-        "  - IPL 2027 retention deadline extension circular (Nov 17, 2026)\n"
-        "  - Constitution player retirement ratifications (Dhawan, Karthik)\n"
-        "  - Salary cap regulation (₹157.0 Cr team purse limit)\n"
-        "• URL: https://www.bcci.tv"
-    )
-    p.font.size = Pt(10.5)
-    p.font.color.rgb = RR_WHITE
-
-    c_ev2 = add_card(s8, Inches(4.8), Inches(1.6), Inches(3.7), Inches(5.2))
-    tb_ev2 = s8.shapes.add_textbox(Inches(5.0), Inches(1.8), Inches(3.3), Inches(4.8))
-    tf_ev2 = tb_ev2.text_frame
-    tf_ev2.word_wrap = True
-    p = tf_ev2.paragraphs[0]
-    p.text = "PRIMARY SOURCE 2: IPL PORTAL"
-    p.font.size = Pt(12)
-    p.font.bold = True
-    p.font.color.rgb = RR_ACCENT_BLUE
-    p.space_after = Pt(8)
-    p = tf_ev2.add_paragraph()
-    p.text = (
-        "• Source: IPL Tournament Portal (iplt20.com/auction)\n"
-        "• Announcements Audited:\n"
-        "  - Official franchise retention lists\n"
-        "  - Capped & uncapped auction registration pool notices\n"
-        "  - Independent overseas entrant shortlists\n"
-        "• URL: https://www.iplt20.com/auction"
-    )
-    p.font.size = Pt(10.5)
-    p.font.color.rgb = RR_WHITE
-
-    c_ev3 = add_card(s8, Inches(8.8), Inches(1.6), Inches(3.7), Inches(5.2))
-    tb_ev3 = s8.shapes.add_textbox(Inches(9.0), Inches(1.8), Inches(3.3), Inches(4.8))
-    tf_ev3 = tb_ev3.text_frame
-    tf_ev3.word_wrap = True
-    p = tf_ev3.paragraphs[0]
-    p.text = "BALL-BY-BALL DATABASE"
-    p.font.size = Pt(12)
-    p.font.bold = True
-    p.font.color.rgb = RR_ACCENT_GREEN
-    p.space_after = Pt(8)
-    p = tf_ev3.add_paragraph()
-    p.text = (
-        "• Scope: 200,999 deliveries (IPL 2022-2026 + T20Is)\n"
-        "• 81,722 pressure deliveries parsed\n"
-        "• 9 Mandatory Evidence Fields documented for every target:\n"
-        "  Name, ID, Franchise, Release Confirmation, Registration Confirmation, Status, Source URL, Date, Timestamp & Notes."
-    )
-    p.font.size = Pt(10.5)
-    p.font.color.rgb = RR_WHITE
-
-    # SLIDE 9: SQUAD ARCHITECTURE & PLAYING XI SYNERGY
-    s9 = prs.slides.add_slide(blank_layout)
-    add_bg(s9)
-    add_header(s9, "Rajasthan Royals Tactical Playing XI & Auction Strategy", "SQUAD SYNERGY")
-
-    c_squad = add_card(s9, Inches(0.8), Inches(1.6), Inches(11.7), Inches(5.2))
-    tb_sq = s9.shapes.add_textbox(Inches(1.1), Inches(1.8), Inches(11.1), Inches(4.8))
+    card_squad = add_card(s3, Inches(0.8), Inches(1.6), Inches(5.7), Inches(5.2))
+    tb_sq = s3.shapes.add_textbox(Inches(1.0), Inches(1.8), Inches(5.3), Inches(4.8))
     tf_sq = tb_sq.text_frame
     tf_sq.word_wrap = True
     p = tf_sq.paragraphs[0]
-    p.text = "TACTICAL PLAYING XI INTEGRATING VERIFIED TARGETS"
-    p.font.size = Pt(13)
+    p.text = "RETAINED SQUAD (19 PLAYERS • ₹27.05 CR PURSE)"
+    p.font.size = Pt(12)
     p.font.bold = True
-    p.font.color.rgb = RR_PINK
-    p.space_after = Pt(8)
+    p.font.color.rgb = RR_ACCENT_GREEN
+    p.space_after = Pt(6)
     p = tf_sq.add_paragraph()
     p.text = (
-        "1. Yashasvi Jaiswal (Retained, ₹18 Cr) — Aggressive LH Opener\n"
-        "2. Fakhar Zaman [Target #1 Batter] (₹4-7 Cr) — High-Tempo Enforcer; counters PP pressure\n"
-        "3. Sanju Samson (Captain/WK, Retained, ₹18 Cr) — Middle-Order Anchor & Playmaker\n"
-        "4. Riyan Parag (Retained, ₹14 Cr) — Spin Hitter & Middle Accelerator\n"
-        "5. Dhruv Jurel (Retained, ₹14 Cr) — Clutch Finisher & High-Pressure Specialist\n"
-        "6. Shimron Hetmyer (Overseas, Retained, ₹11 Cr) — Left-Handed Death Boundary Enforcer\n"
-        "7. Asif Khan / Angelo Mathews [Target #2/4 Batter] (₹2-4 Cr) — Crisis Stabilizer / 196+ SR Finisher\n"
-        "8. Jason Holder [Target #1 Bowler] (₹5-7 Cr) — Dual-Discipline Pace All-Rounder & Death Seamer\n"
-        "9. Sandeep Sharma (Retained, ₹4 Cr Uncapped) — Elite Knuckle-ball & Wide Yorker Executioner\n"
-        "10. Haris Rauf [Target #2 Bowler] (₹6-9 Cr) — 150+ kph Express Tearaway Spearhead\n"
-        "11. Maheesh Theekshana / Mohammad Nawaz [Target #3/4 Bowler] (₹4-7 Cr) — Powerplay/Middle Restriction Spin\n\n"
-        "Impact Player Strategies: Asif Khan (Chasing enforcer) or Tactical Domestic Seamer."
+        "• Batters (5): Yashasvi Jaiswal, Riyan Parag, Shubham Dubey, Vaibhav Sooryavanshi, Aman Rao Perala\n"
+        "• Wicketkeepers (3): Dhruv Jurel, Donovan Ferreira (OS), Lhuan-dre Pretorius (OS)\n"
+        "• All-Rounders (2): Ravindra Jadeja (Trade), Dasun Shanaka (OS)\n"
+        "• Pace Attack (5): Mohammed Shami (Trade), Jofra Archer (OS), Sandeep Sharma, Nandre Burger (OS), Sushant Mishra\n"
+        "• Spin Attack (2): Ravi Bishnoi, Manimaran Siddharth (Trade)\n"
+        "• Emerging/Development (2): Brijesh Sharma, Yash Raj Punja\n"
+        "• Vacant Auction Slots: 6 Available (Max 3 Overseas Allowed)"
+    )
+    p.font.size = Pt(10)
+    p.font.color.rgb = RR_WHITE
+
+    card_gaps = add_card(s3, Inches(6.8), Inches(1.6), Inches(5.7), Inches(5.2))
+    tb_gp = s3.shapes.add_textbox(Inches(7.0), Inches(1.8), Inches(5.3), Inches(4.8))
+    tf_gp = tb_gp.text_frame
+    tf_gp.word_wrap = True
+    p = tf_gp.paragraphs[0]
+    p.text = "CRITICAL SQUAD VULNERABILITIES TO SOLVE"
+    p.font.size = Pt(12)
+    p.font.bold = True
+    p.font.color.rgb = RR_ACCENT_ROSE
+    p.space_after = Pt(6)
+    p = tf_gp.add_paragraph()
+    p.text = (
+        "1. No. 3 Top-Order Anchor (Critical Gap):\n"
+        "   With Sanju Samson traded to CSK, RR lacks an experienced stabilizer at No. 3 to prevent early collapses while Jaiswal and Parag attack.\n\n"
+        "2. Middle-Order Spin Destructor & Death Finisher:\n"
+        "   Hetmyer's release leaves a void in overs 16–20; RR requires left-handed power hitting to destroy wrist-spin and pace.\n\n"
+        "3. Death Seam Spearhead:\n"
+        "   While Sandeep Sharma is elite, RR requires a lockdown partner for overs 18 & 20.\n\n"
+        "4. Indian Roster Depth & Keeper Backup:\n"
+        "   RR already holds 5 overseas players; RR MUST spend purse on premium domestic Indian talent (at least 3-4 Indian buys)."
+    )
+    p.font.size = Pt(10)
+    p.font.color.rgb = RR_WHITE
+
+    # SLIDE 4: TOP 10 BATTERS
+    s4 = prs.slides.add_slide(blank_layout)
+    add_bg(s4)
+    add_header(s4, "Top 10 Verified Auction-Eligible Batters for Rajasthan Royals", "BATTER SCOUTING BOARD")
+
+    # Table of Batters
+    rows = 11
+    cols = 7
+    left = Inches(0.8)
+    top = Inches(1.6)
+    width = Inches(11.7)
+    height = Inches(5.2)
+
+    table_shape = s4.shapes.add_table(rows, cols, left, top, width, height)
+    tbl = table_shape.table
+    tbl.columns[0].width = Inches(0.6)
+    tbl.columns[1].width = Inches(2.2)
+    tbl.columns[2].width = Inches(1.1)
+    tbl.columns[3].width = Inches(1.1)
+    tbl.columns[4].width = Inches(1.2)
+    tbl.columns[5].width = Inches(1.2)
+    tbl.columns[6].width = Inches(4.3)
+
+    headers = ["#", "Player Name", "Origin", "PPI", "Press SR", "Max Bid", "Tactical Solution for RR"]
+    for c_idx, h in enumerate(headers):
+        cell = tbl.cell(0, c_idx)
+        cell.fill.solid()
+        cell.fill.fore_color.rgb = RR_PINK
+        p = cell.text_frame.paragraphs[0]
+        p.text = h
+        p.font.size = Pt(10)
+        p.font.bold = True
+        p.font.color.rgb = RR_WHITE
+
+    for r_idx, b in enumerate(top_batters, 1):
+        row_vals = [
+            f"#{b['rank']}",
+            b['name'],
+            f"{b['classification']} ({b['previous_franchise']})",
+            f"{b['ppi_score']:.1f}",
+            f"{b['p_sr']:.1f}",
+            b['max_bid'],
+            b['why_target'][:65] + "..."
+        ]
+        for c_idx, val in enumerate(row_vals):
+            cell = tbl.cell(r_idx, c_idx)
+            cell.fill.solid()
+            cell.fill.fore_color.rgb = RR_CARD_BG if r_idx % 2 == 1 else RR_NAVY
+            p = cell.text_frame.paragraphs[0]
+            p.text = val
+            p.font.size = Pt(8.5)
+            p.font.color.rgb = RR_WHITE
+
+    # SLIDE 5: TOP 10 BOWLERS
+    s5 = prs.slides.add_slide(blank_layout)
+    add_bg(s5)
+    add_header(s5, "Top 10 Verified Auction-Eligible Bowlers for Rajasthan Royals", "BOWLER SCOUTING BOARD")
+
+    table_shape_b = s5.shapes.add_table(rows, cols, left, top, width, height)
+    tbl_b = table_shape_b.table
+    tbl_b.columns[0].width = Inches(0.6)
+    tbl_b.columns[1].width = Inches(2.2)
+    tbl_b.columns[2].width = Inches(1.1)
+    tbl_b.columns[3].width = Inches(1.1)
+    tbl_b.columns[4].width = Inches(1.2)
+    tbl_b.columns[5].width = Inches(1.2)
+    tbl_b.columns[6].width = Inches(4.3)
+
+    b_headers = ["#", "Player Name", "Origin", "PPI", "Press Econ", "Max Bid", "Tactical Solution for RR"]
+    for c_idx, h in enumerate(b_headers):
+        cell = tbl_b.cell(0, c_idx)
+        cell.fill.solid()
+        cell.fill.fore_color.rgb = RR_ACCENT_BLUE
+        p = cell.text_frame.paragraphs[0]
+        p.text = h
+        p.font.size = Pt(10)
+        p.font.bold = True
+        p.font.color.rgb = RR_WHITE
+
+    for r_idx, w in enumerate(top_bowlers, 1):
+        row_vals = [
+            f"#{w['rank']}",
+            w['name'],
+            f"{w['classification']} ({w['previous_franchise']})",
+            f"{w['ppi_score']:.1f}",
+            f"{w['p_econ']:.2f}",
+            w['max_bid'],
+            w['why_target'][:65] + "..."
+        ]
+        for c_idx, val in enumerate(row_vals):
+            cell = tbl_b.cell(r_idx, c_idx)
+            cell.fill.solid()
+            cell.fill.fore_color.rgb = RR_CARD_BG if r_idx % 2 == 1 else RR_NAVY
+            p = cell.text_frame.paragraphs[0]
+            p.text = val
+            p.font.size = Pt(8.5)
+            p.font.color.rgb = RR_WHITE
+
+    # SLIDE 6: BUDGET SIMULATION & PLAYING XI
+    s6 = prs.slides.add_slide(blank_layout)
+    add_bg(s6)
+    add_header(s6, "Auction Budget Strategy (₹27.05 Cr) & Optimized Playing XI", "TACTICAL BLUEPRINT")
+
+    card_bud = add_card(s6, Inches(0.8), Inches(1.6), Inches(5.7), Inches(5.2))
+    tb_b = s6.shapes.add_textbox(Inches(1.0), Inches(1.8), Inches(5.3), Inches(4.8))
+    tf_b = tb_b.text_frame
+    tf_b.word_wrap = True
+    p = tf_b.paragraphs[0]
+    p.text = "BALANCED ACQUISITION STRATEGY (₹24.0 CR SPENT • ₹3.05 CR BUFFER)"
+    p.font.size = Pt(11)
+    p.font.bold = True
+    p.font.color.rgb = RR_ACCENT_GREEN
+    p.space_after = Pt(6)
+    p = tf_b.add_paragraph()
+    p.text = (
+        "• P1: Matheesha Pathirana (OS Death Bowler) — Bid: ₹9.5 Cr | Walk-away: ₹11.0 Cr\n"
+        "• P2: Nehal Wadhera (IND Left-Hand Finisher) — Bid: ₹5.5 Cr | Walk-away: ₹6.5 Cr\n"
+        "• P3: Ajinkya Rahane (IND No. 3 Anchor) — Bid: ₹2.5 Cr | Walk-away: ₹3.5 Cr\n"
+        "• P4: Mahipal Lomror (IND Spin Destroyer) — Bid: ₹2.5 Cr | Walk-away: ₹3.5 Cr\n"
+        "• P5: Abishek Porel (IND Backup Keeper) — Bid: ₹2.5 Cr | Walk-away: ₹3.2 Cr\n"
+        "• P6: Asif Khan (OS Power Finisher Backup) — Bid: ₹1.5 Cr | Walk-away: ₹2.0 Cr\n\n"
+        "Composition Outcome: 4 Indians + 2 Overseas | Total Squad: 25 | Overseas: 7/8"
+    )
+    p.font.size = Pt(10)
+    p.font.color.rgb = RR_WHITE
+
+    card_xi = add_card(s6, Inches(6.8), Inches(1.6), Inches(5.7), Inches(5.2))
+    tb_xi = s6.shapes.add_textbox(Inches(7.0), Inches(1.8), Inches(5.3), Inches(4.8))
+    tf_xi = tb_xi.text_frame
+    tf_xi.word_wrap = True
+    p = tf_xi.paragraphs[0]
+    p.text = "OPTIMIZED RAJASTHAN ROYALS PLAYING XI"
+    p.font.size = Pt(11)
+    p.font.bold = True
+    p.font.color.rgb = RR_ACCENT_AMBER
+    p.space_after = Pt(6)
+    p = tf_xi.add_paragraph()
+    p.text = (
+        "1. Yashasvi Jaiswal (Indian LHB Opener)\n"
+        "2. Vaibhav Sooryavanshi / Lhuan-dre Pretorius ✈️\n"
+        "3. Ajinkya Rahane (Indian No. 3 Anchor - Auction Target)\n"
+        "4. Riyan Parag (Indian Middle-Order Batter/Off-Spinner)\n"
+        "5. Dhruv Jurel (Wk) (Indian Crisis Batter)\n"
+        "6. Nehal Wadhera (Indian LHB Finisher - Auction Target)\n"
+        "7. Ravindra Jadeja (Indian Elite All-Rounder)\n"
+        "8. Jofra Archer ✈️ (Overseas Express Fast Bowler)\n"
+        "9. Mohammed Shami (Indian Fast Bowler)\n"
+        "10. Ravi Bishnoi (Indian Leg-Spinner)\n"
+        "11. Sandeep Sharma (Indian Death Seamer)\n\n"
+        "Impact Sub: Matheesha Pathirana ✈️ (Auction Target) replaces Ajinkya Rahane during the bowling innings."
     )
     p.font.size = Pt(10)
     p.font.color.rgb = RR_WHITE

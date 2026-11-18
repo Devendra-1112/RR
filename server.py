@@ -59,35 +59,37 @@ class WarRoomHandler(SimpleHTTPRequestHandler):
             return self.deterministic_fallback(query)
             
         system_instruction = (
-            "You are the Rajasthan Royals Lead Auction Strategist & Cricket Data Scientist in the IPL 2027 War Room. "
-            "You have direct access to 200,999 deliveries (IPL 2022-2026 and T20Is) and the official Unstop submission data.\n"
-            "UNSTOP SUPE RR SELECTOR RECOMMENDATIONS:\n"
-            "TOP 10 BATSMEN:\n"
-            "1. Naman Dhir (PPI: 92.41 | Press SR: 194.44 | Domestic 360° Finisher)\n"
-            "2. Shreyas Iyer (PPI: 90.57 | Press SR: 179.20 | Marquee Middle-Order Anchor)\n"
-            "3. Rishabh Pant (PPI: 89.68 | Press SR: 180.54 | Left-Hand Keeper-Batter)\n"
-            "4. Fakhar Zaman (PPI: 96.68 | Press SR: 183.89 | Powerplay Disruptor)\n"
-            "5. Asif Khan (PPI: 94.13 | Press SR: 196.52 | Highest Clutch Strike Rate)\n"
-            "6. Najibullah Zadran (PPI: 92.52 | Press SR: 180.00 | Death Enforcer)\n"
-            "7. Babar Azam (PPI: 91.73 | Press SR: 163.25 | 51.33 Press Avg)\n"
-            "8. Phil Salt (PPI: 90.93 | Press SR: 187.27 | Powerplay Boundary Striker)\n"
-            "9. Tim David (PPI: 90.60 | Press SR: 194.85 | Heavy Boundary Lever)\n"
-            "10. Angelo Mathews (PPI: 87.89 | Press SR: 176.14 | 20.5% Dot Rate | Crisis Stabilizer)\n\n"
-            "TOP 10 BOWLERS:\n"
-            "1. Arshdeep Singh (PPI: 306.82 | 131 Clutch Wkts | 8.89 Econ | #1 Death Seamer)\n"
-            "2. Bhuvneshwar Kumar (PPI: 177.25 | 68 Wkts | 8.87 Econ | Swing & Yorker Mastery)\n"
-            "3. Yuzvendra Chahal (PPI: 180.78 | 71 Wkts | 8.91 Econ | Returning Spin Match-Winner)\n"
-            "4. Harshal Patel (PPI: 163.53 | 64 Wkts | 9.54 Econ | Slower Dip Specialist)\n"
-            "5. Jason Holder (PPI: 160.93 | 63 Wkts | 9.50 Econ | Bounce & Power All-Rounder)\n"
-            "6. Mohammed Siraj (PPI: 140.08 | 47 Wkts | 41.7% Dot Balls | Aggressive Breakthrough)\n"
-            "7. Haris Rauf (PPI: 132.24 | 43 Wkts | 8.76 Econ | 150+ kph Tearaway Spearhead)\n"
-            "8. Maheesh Theekshana (PPI: 128.17 | 40 Wkts | 7.94 Econ | Middle Restriction Mystery)\n"
-            "9. Mohammad Nawaz (PPI: 128.08 | 28 Wkts | 5.87 Econ | 42.4% Dots | Best Defensive Econ)\n"
-            "10. Trent Boult (PPI: 128.22 | 40 Wkts | 8.45 Econ | New-Ball Swing Specialist)\n\n"
-            "GOVERNANCE RULES:\n"
-            "• Retained cores (Bumrah, Kohli, Klaasen, Rashid Khan, Gaikwad) and retired players (Dhawan, Karthik) are strictly UNAVAILABLE.\n"
-            "• Contracted players await the official BCCI Nov 17, 2026 deadline for formal release ratification.\n"
-            "Answer concisely in 2 to 4 crisp bullet points with exact statistics."
+            "You are the Rajasthan Royals Lead Auction Strategist & Cricket Data Scientist in the IPL 2027 War Room (ITC Grand Goa, Dec 16, 2026). "
+            "You have direct access to 200,999 deliveries (IPL 2022-2026 and T20Is) and the official BCCI 18 November 2026 Retention/Release database.\n"
+            "RR SQUAD CONTEXT:\n"
+            "• Retained Squad (19 Players): Yashasvi Jaiswal, Ravindra Jadeja (Trade), Mohammed Shami (Trade), Riyan Parag, Dhruv Jurel, Jofra Archer, Sandeep Sharma, Ravi Bishnoi, Nandre Burger, Dasun Shanaka, Donovan Ferreira, Lhuan-dre Pretorius, Manimaran Siddharth (Trade), Shubham Dubey, Vaibhav Sooryavanshi, Sushant Mishra, Aman Rao Perala, Brijesh Sharma, Yash Raj Punja.\n"
+            "• Remaining Purse: ₹27.05 Cr | Open Slots: 6 (Max 3 Overseas).\n\n"
+            "OFFICIAL TOP 10 AUCTION TARGETS:\n"
+            "TOP 10 BATSMEN (100% VERIFIED AUCTION ELIGIBLE):\n"
+            "1. Ajinkya Rahane (Indian | KKR | PPI: 68.88 | Press SR: 147.47 | No. 3 Anchor, replaces Samson | Max Bid: ₹4.5 Cr)\n"
+            "2. Nitish Rana (Indian | DC | PPI: 66.60 | Press SR: 155.06 | Spin Destroyer in Middle Overs | Max Bid: ₹7.0 Cr)\n"
+            "3. Nehal Wadhera (Indian | PBKS | PPI: 62.32 | Press SR: 145.20 | Left-Hand Clutch Finisher | Max Bid: ₹7.5 Cr)\n"
+            "4. Shimron Hetmyer (Overseas | RR | PPI: 65.82 | Press SR: 155.92 | Proven RR Death Finisher Buy-back | Max Bid: ₹8.5 Cr)\n"
+            "5. Rahul Tripathi (Indian | KKR | PPI: 57.98 | Press SR: 141.74 | Aggressive No. 3 Intent Striker | Max Bid: ₹5.0 Cr)\n"
+            "6. Mahipal Lomror (Indian | MI | PPI: 66.37 | Press SR: 162.03 | Southpaw Power Hitter / SLA | Max Bid: ₹4.0 Cr)\n"
+            "7. Abishek Porel (Indian | DC | PPI: 49.12 | Press SR: 132.88 | Indian Backup Wicketkeeper-Batter | Max Bid: ₹4.5 Cr)\n"
+            "8. Asif Khan (Overseas | Int'l | PPI: 94.25 | Press SR: 196.52 | Budget Death Boundary Accelerator | Max Bid: ₹3.0 Cr)\n"
+            "9. Rachin Ravindra (Overseas | KKR | PPI: 66.38 | Press SR: 147.70 | Top-Order / SLA All-Rounder | Max Bid: ₹7.0 Cr)\n"
+            "10. Fakhar Zaman (Overseas | Int'l | PPI: 94.05 | Press SR: 183.89 | Powerplay Enforcer | Max Bid: ₹5.5 Cr)\n\n"
+            "TOP 10 BOWLERS (100% VERIFIED AUCTION ELIGIBLE):\n"
+            "1. Matheesha Pathirana (Overseas | KKR | PPI: 176.17 | 61 Clutch Wkts | 7.90 Press Econ | Generational Death Specialist | Max Bid: ₹12.0 Cr)\n"
+            "2. Trent Boult (Overseas | MI | PPI: 128.22 | 40 Clutch Wkts | 8.45 Press Econ | Powerplay Swing Icon returning | Max Bid: ₹8.0 Cr)\n"
+            "3. Avesh Khan (Indian | LSG | PPI: 148.58 | 57 Clutch Wkts | 9.76 Press Econ | 145+ kph Indian Death Seamer | Max Bid: ₹7.5 Cr)\n"
+            "4. Mustafizur Rahman (Overseas | KKR | PPI: 147.76 | 48 Clutch Wkts | 7.87 Press Econ | Cutter & Change of Pace | Max Bid: ₹5.5 Cr)\n"
+            "5. Wanindu Hasaranga (Overseas | LSG | PPI: 146.35 | 53 Clutch Wkts | 8.76 Press Econ | Mystery Spin All-Rounder | Max Bid: ₹6.5 Cr)\n"
+            "6. Deepak Chahar (Indian | MI | PPI: 85.53 | 8.72 Press Econ | Powerplay Swing Specialist | Max Bid: ₹5.5 Cr)\n"
+            "7. Maheesh Theekshana (Overseas | Int'l | PPI: 128.17 | 40 Clutch Wkts | 7.94 Press Econ | Carrom Mystery | Max Bid: ₹5.5 Cr)\n"
+            "8. Tushar Deshpande (Indian | RR | PPI: 114.22 | 41 Clutch Wkts | Domestic Seam Backup | Max Bid: ₹4.0 Cr)\n"
+            "9. Akash Deep (Indian | KKR | Test Seamer | Hit-the-Deck Seam Depth | Max Bid: ₹4.5 Cr)\n"
+            "10. Haris Rauf (Overseas | Int'l | PPI: 132.24 | 43 Clutch Wkts | 8.76 Press Econ | 150+ kph Tearaway | Max Bid: ₹6.5 Cr)\n\n"
+            "GOVERNANCE & AVAILABILITY RULES:\n"
+            "• All 184 retained players across all 10 franchises (e.g., Bumrah, Kohli, Klaasen, Rashid Khan, Gaikwad, Samson, Hardik, Arshdeep, Shreyas, Pant, Gill) and retired players (Dhawan, Karthik, Dhoni) and withdrawn (Travis Head) are strictly UNAVAILABLE.\n"
+            "• Answer concisely in 2 to 4 crisp bullet points with exact statistics and strategic reasoning."
         )
 
         url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key={API_KEY}"
@@ -123,32 +125,44 @@ class WarRoomHandler(SimpleHTTPRequestHandler):
 
     def deterministic_fallback(self, query):
         q = query.lower()
-        if 'bumrah' in q or 'kohli' in q or 'varun' in q or 'rashid' in q or 'klaasen' in q:
+        if 'bumrah' in q or 'kohli' in q or 'rashid' in q or 'klaasen' in q or 'samson' in q or 'hardik' in q or 'arshdeep' in q or 'shreyas' in q:
             return (
                 "**VERIFIED UNAVAILABLE ALERT:**\n"
-                "• **Jasprit Bumrah** (MI ₹18 Cr), **Virat Kohli** (RCB ₹21 Cr), **Heinrich Klaasen** (SRH ₹23 Cr), and **Rashid Khan** (GT ₹18 Cr) "
-                "are officially confirmed retentions and contractually bound to their franchises.\n"
+                "• **Jasprit Bumrah & Arshdeep Singh** (MI), **Virat Kohli** (RCB), **Heinrich Klaasen** (SRH), **Rashid Khan & Gill** (GT), "
+                "**Sanju Samson** (CSK - Traded), **Hardik Pandya & Shreyas Iyer** (PBKS), and **Rishabh Pant** (DC - Traded) "
+                "are officially confirmed retentions/trades in the BCCI Nov 18, 2026 list.\n"
                 "• Under BCCI IPL regulations, they are **STRICTLY UNAVAILABLE** for the IPL 2027 auction and cannot be targeted."
             )
-        elif 'naman' in q or 'finisher' in q:
+        elif 'rahane' in q or 'no 3' in q or 'anchor' in q or 'samson replacement' in q:
             return (
-                "**#1 DOMESTIC FINISHER: NAMAN DHIR**\n"
-                "• **Pressure Strike Rate:** 194.44 (vs 168.42 baseline)\n"
-                "• **Clutch Run Production:** 288 pressure balls with only 26.4% dot balls\n"
-                "• **Tactical Value for RR:** Solves Rajasthan Royals' death-overs chase bottleneck while preserving an overseas slot."
+                "**#1 TARGET FOR RR NO. 3 ANCHOR: AJINKYA RAHANE**\n"
+                "• **Pressure Metrics:** 147.47 Pressure SR | 31.58 Pressure Avg\n"
+                "• **Tactical Value for RR:** Solves Rajasthan Royals' vacancy at No. 3 following Sanju Samson's trade to CSK. "
+                "Anchors innings against collapse and allows Jaiswal, Parag, and Jurel to play aggressively.\n"
+                "• **Valuation:** Estimated ₹2.5–4.0 Cr (Max Bid: ₹4.5 Cr)."
             )
-        elif 'arshdeep' in q or 'death' in q or 'bowler' in q:
+        elif 'pathirana' in q or 'death' in q or 'bowler' in q:
             return (
-                "**#1 DEATH BOWLING TARGET: ARSHDEEP SINGH**\n"
-                "• **Clutch Record:** 131 pressure wickets across 1,783 high-leverage deliveries\n"
-                "• **Death Economy:** 8.89 in overs 16–20 with 37.2% dot balls\n"
-                "• **Pairing with Sandeep Sharma:** Creates an impermeable left-arm/right-arm death combination at Sawai Mansingh Stadium."
+                "**#1 DEATH BOWLING TARGET: MATHEESHA PATHIRANA**\n"
+                "• **Clutch Record:** 61 pressure wickets across high-leverage deliveries with a stingy 7.90 pressure economy\n"
+                "• **Tactical Value for RR:** Generational sling-action death bowler released by KKR. "
+                "Pairs with Sandeep Sharma, Jofra Archer, and Mohammed Shami to form the competition's most feared death unit.\n"
+                "• **Valuation:** Estimated ₹8.0–11.5 Cr (Max Bid: ₹12.0 Cr)."
+            )
+        elif 'purse' in q or 'budget' in q:
+            return (
+                "**RAJASTHAN ROYALS AUCTION BUDGET STRATEGY (₹27.05 CR PURSE):**\n"
+                "• **Purse Remaining:** ₹27.05 Cr | **Slots to Fill:** 6 (Max 3 Overseas)\n"
+                "• **Priority 1 (Death Pace Spearhead):** Matheesha Pathirana (Allocated ₹9.5 Cr) or Trent Boult (Allocated ₹7.0 Cr)\n"
+                "• **Priority 2 (Indian Finisher):** Nehal Wadhera (Allocated ₹5.5 Cr) or Nitish Rana (Allocated ₹5.5 Cr)\n"
+                "• **Priority 3 (No. 3 Anchor):** Ajinkya Rahane (Allocated ₹2.5 Cr)\n"
+                "• **Priority 4–6 (Indian & Budget Depth):** Mahipal Lomror (₹2.5 Cr), Abishek Porel (₹2.5 Cr), Asif Khan (₹1.5 Cr)."
             )
         else:
             return (
-                "**UNSTOP SUBMISSION SELECTION (TOP 10 BATSMEN & BOWLERS):**\n"
-                "• **Top 10 Batsmen:** Naman Dhir, Shreyas Iyer, Rishabh Pant, Fakhar Zaman, Asif Khan, Najibullah Zadran, Babar Azam, Phil Salt, Tim David, Angelo Mathews.\n"
-                "• **Top 10 Bowlers:** Arshdeep Singh, Bhuvneshwar Kumar, Yuzvendra Chahal, Harshal Patel, Jason Holder, Mohammed Siraj, Haris Rauf, Maheesh Theekshana, Mohammad Nawaz, Trent Boult."
+                "**OFFICIAL IPL 2027 TARGETS (18 NOVEMBER 2026 BASELINE):**\n"
+                "• **Top 10 Batters:** Ajinkya Rahane, Nitish Rana, Nehal Wadhera, Shimron Hetmyer, Rahul Tripathi, Mahipal Lomror, Abishek Porel, Asif Khan, Rachin Ravindra, Fakhar Zaman.\n"
+                "• **Top 10 Bowlers:** Matheesha Pathirana, Trent Boult, Avesh Khan, Mustafizur Rahman, Wanindu Hasaranga, Deepak Chahar, Maheesh Theekshana, Tushar Deshpande, Akash Deep, Haris Rauf."
             )
 
 def run_server(port=None):
