@@ -182,7 +182,7 @@ def create_deck():
     add_header(s3, "Auction Eligibility Audit & Candidate Disqualification Report", "REGULATORY AUDIT")
 
     card_chg = add_card(s3, Inches(0.8), Inches(1.5), Inches(11.7), Inches(5.4))
-    table_shape = s3.shapes.add_table(4, 5, Inches(1.0), Inches(1.8), Inches(11.3), Inches(4.8))
+    table_shape = s3.shapes.add_table(len(change_report) + 1, 5, Inches(1.0), Inches(1.8), Inches(11.3), Inches(4.8))
     tbl = table_shape.table
     tbl.columns[0].width = Inches(1.8)
     tbl.columns[1].width = Inches(1.3)
@@ -197,7 +197,7 @@ def create_deck():
         cell.fill.fore_color.rgb = RR_NAVY
         p = cell.text_frame.paragraphs[0]
         p.text = h
-        p.font.size = Pt(10)
+        p.font.size = Pt(9.5)
         p.font.bold = True
         p.font.color.rgb = RR_WHITE
 
@@ -215,7 +215,7 @@ def create_deck():
             cell.fill.fore_color.rgb = RR_CARD_BG if r_idx % 2 == 1 else RR_NAVY
             p = cell.text_frame.paragraphs[0]
             p.text = val
-            p.font.size = Pt(8.5)
+            p.font.size = Pt(7.5)
             p.font.color.rgb = RR_WHITE if c_idx != 3 else RR_ACCENT_GREEN
 
     # SLIDE 4: CORRECTED TOP 10 BATSMEN
@@ -318,7 +318,7 @@ def create_deck():
     tf_b = tb_b.text_frame
     tf_b.word_wrap = True
     p = tf_b.paragraphs[0]
-    p.text = "BALANCED ACQUISITION STRATEGY (₹24.0 CR SPENT • ₹3.05 CR BUFFER)"
+    p.text = "BALANCED ACQUISITION STRATEGY (₹25.0 CR SPENT • ₹2.05 CR BUFFER)"
     p.font.size = Pt(11)
     p.font.bold = True
     p.font.color.rgb = RR_ACCENT_GREEN
@@ -327,7 +327,7 @@ def create_deck():
     p.text = (
         "• P1: Matheesha Pathirana (OS Death Bowler) — Bid: ₹9.5 Cr | Walk-away: ₹11.0 Cr\n"
         "• P2: Nehal Wadhera (IND Left-Hand Finisher) — Bid: ₹5.5 Cr | Walk-away: ₹6.5 Cr\n"
-        "• P3: Ajinkya Rahane (IND No. 3 Anchor) — Bid: ₹2.5 Cr | Walk-away: ₹3.5 Cr\n"
+        "• P3: Rahul Tripathi (IND No. 3 Anchor/Striker) — Bid: ₹3.5 Cr | Walk-away: ₹4.5 Cr\n"
         "• P4: Mahipal Lomror (IND Spin Destroyer) — Bid: ₹2.5 Cr | Walk-away: ₹3.5 Cr\n"
         "• P5: Abishek Porel (IND Backup Keeper) — Bid: ₹2.5 Cr | Walk-away: ₹3.2 Cr\n"
         "• P6: M Shahrukh Khan (IND Power Finisher) — Bid: ₹1.5 Cr | Walk-away: ₹2.5 Cr\n\n"
@@ -350,7 +350,7 @@ def create_deck():
     p.text = (
         "1. Yashasvi Jaiswal (Indian LHB Opener)\n"
         "2. Vaibhav Sooryavanshi / Lhuan-dre Pretorius ✈️\n"
-        "3. Ajinkya Rahane (Indian No. 3 Anchor - Auction Target)\n"
+        "3. Rahul Tripathi (Indian No. 3 Anchor/Striker - Auction Target)\n"
         "4. Riyan Parag (Indian Middle-Order Batter/Off-Spinner)\n"
         "5. Dhruv Jurel (Wk) (Indian Crisis Batter)\n"
         "6. Nehal Wadhera (Indian LHB Finisher - Auction Target)\n"
@@ -359,7 +359,7 @@ def create_deck():
         "9. Mohammed Shami (Indian Fast Bowler)\n"
         "10. Ravi Bishnoi (Indian Leg-Spinner)\n"
         "11. Sandeep Sharma (Indian Death Seamer)\n\n"
-        "Impact Sub: Matheesha Pathirana ✈️ (Auction Target) replaces Ajinkya Rahane during the bowling innings."
+        "Impact Sub: Matheesha Pathirana ✈️ (Auction Target) replaces Rahul Tripathi during the bowling innings."
     )
     p.font.size = Pt(10)
     p.font.color.rgb = RR_WHITE

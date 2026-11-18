@@ -200,7 +200,7 @@ def build_pdf_report(filename="RR_SupeRR_Selector_Methodology_Report.pdf"):
     # =========================================================================
     story.append(Paragraph("4. Corrected Top 10 Verified Auction-Eligible Batters for Rajasthan Royals", h1_style))
     story.append(Paragraph(
-        "100% verified auction-eligible players. Replaced Fakhar Zaman (Pakistani restriction) and Asif Khan (unregistered) with <b>Glenn Maxwell</b> (PPI: 81.6) and <b>M Shahrukh Khan</b> (PPI: 75.1):",
+        "100% verified auction-eligible players. Replaced Fakhar Zaman (Pakistani restriction), Asif Khan (unregistered), and Ajinkya Rahane (unavailable for 2027) with <b>Rahul Tripathi</b> (Samson No. 3 replacement), <b>Glenn Maxwell</b> (PPI: 81.6), <b>M Shahrukh Khan</b> (PPI: 75.1), and <b>Abhinav Manohar</b> (PPI: 70.1):",
         body_style
     ))
 
@@ -259,8 +259,8 @@ def build_pdf_report(filename="RR_SupeRR_Selector_Methodology_Report.pdf"):
     # Section 6: Revised Playing XI & Impact Player
     story.append(Paragraph("6. Rajasthan Royals Playing XI with Corrected Auction Targets", h1_style))
     story.append(Paragraph(
-        "<b>Batting First Playing XI:</b> 1. <b>Yashasvi Jaiswal</b> (IND) • 2. <b>Vaibhav Sooryavanshi</b> (IND) • 3. <b>Ajinkya Rahane</b> (IND - Target, No. 3 Anchor) • 4. <b>Riyan Parag</b> (IND, Spin Striker) • 5. <b>Dhruv Jurel</b> (IND, Wk) • 6. <b>Glenn Maxwell</b> ✈️ (OS - Target, Explosive Spin Hitter) • 7. <b>Nehal Wadhera</b> (IND - Target, Finisher) • 8. <b>Ravindra Jadeja</b> (IND, All-Rounder) • 9. <b>Jofra Archer</b> ✈️ (OS, Fast Bowler) • 10. <b>Mohammed Shami</b> (IND, Seam Bowler) • 11. <b>Ravi Bishnoi</b> (IND, Leg-Spinner).<br/>"
-        "<b>Tactical Impact Player Substitution:</b> <b>Matheesha Pathirana</b> ✈️ (Target) replaces Ajinkya Rahane during the bowling innings, fielding an unplayable bowling battery of Archer, Shami, Pathirana, Sandeep/Prasidh, Jadeja, and Bishnoi.",
+        "<b>Batting First Playing XI:</b> 1. <b>Yashasvi Jaiswal</b> (IND) • 2. <b>Vaibhav Sooryavanshi</b> (IND) • 3. <b>Rahul Tripathi</b> (IND - Target, No. 3 Anchor/Striker) • 4. <b>Riyan Parag</b> (IND, Spin Striker) • 5. <b>Dhruv Jurel</b> (IND, Wk) • 6. <b>Glenn Maxwell</b> ✈️ (OS - Target, Explosive Spin Hitter) • 7. <b>Nehal Wadhera</b> (IND - Target, Finisher) • 8. <b>Ravindra Jadeja</b> (IND, All-Rounder) • 9. <b>Jofra Archer</b> ✈️ (OS, Fast Bowler) • 10. <b>Mohammed Shami</b> (IND, Seam Bowler) • 11. <b>Ravi Bishnoi</b> (IND, Leg-Spinner).<br/>"
+        "<b>Tactical Impact Player Substitution:</b> <b>Matheesha Pathirana</b> ✈️ (Target) replaces Rahul Tripathi during the bowling innings, fielding an unplayable bowling battery of Archer, Shami, Pathirana, Sandeep/Prasidh, Jadeja, and Bishnoi.",
         body_style
     ))
 

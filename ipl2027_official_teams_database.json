@@ -2699,24 +2699,24 @@
   "top_10_batters": [
     {
       "rank": 1,
-      "name": "Ajinkya Rahane",
+      "name": "Rahul Tripathi",
       "previous_franchise": "KKR",
       "status": "VERIFIED AUCTION ELIGIBLE",
       "classification": "Indian",
-      "role": "Top-Order Anchor (RHB)",
-      "ipl_matches": 56,
-      "ipl_runs": 1426,
-      "overall_sr": 139.12,
-      "p_sr": 147.47,
-      "p_avg": 31.58,
-      "p_balls": 257,
-      "ppi_score": 68.88,
+      "role": "No. 3 Intent Anchor / Striker (RHB)",
+      "ipl_matches": 48,
+      "ipl_runs": 906,
+      "overall_sr": 142.1,
+      "p_sr": 166.4,
+      "p_avg": 22.2,
+      "p_balls": 107,
+      "ppi_score": 77.75,
       "rr_fit_score": 97.0,
-      "suitability_score": 85.57,
-      "est_value": "\u20b92.5\u20134.0 Cr",
-      "max_bid": "\u20b94.5 Cr",
-      "why_target": "Premier replacement for Sanju Samson at No. 3. Stabilizes early collapse, anchors while Jaiswal/Parag attack, and provides veteran captaincy support.",
-      "risks": "Susceptible to express 150kph hard-length bowling if required run rate crosses 12 early.",
+      "suitability_score": 88.5,
+      "est_value": "\u20b93.5\u20135.0 Cr",
+      "max_bid": "\u20b95.5 Cr",
+      "why_target": "High-tempo No. 3 with fearless intent against pace and spin. Directly replaces Sanju Samson at No. 3 with proven IPL pedigree (2,200+ career IPL runs).",
+      "risks": "Aggressive shot selection carries early dismissal risk against quality swing.",
       "source_url": "https://www.iplt20.com/auction-2027-retention-release"
     },
     {
@@ -2831,28 +2831,6 @@
     },
     {
       "rank": 7,
-      "name": "Rahul Tripathi",
-      "previous_franchise": "KKR",
-      "status": "VERIFIED AUCTION ELIGIBLE",
-      "classification": "Indian",
-      "role": "No. 3 Intent Anchor / Striker (RHB)",
-      "ipl_matches": 48,
-      "ipl_runs": 906,
-      "overall_sr": 142.1,
-      "p_sr": 141.74,
-      "p_avg": 18.18,
-      "p_balls": 107,
-      "ppi_score": 57.98,
-      "rr_fit_score": 94.0,
-      "suitability_score": 80.88,
-      "est_value": "\u20b93.0\u20134.5 Cr",
-      "max_bid": "\u20b95.0 Cr",
-      "why_target": "High-tempo No. 3 with fearless intent against pace and spin. Solves RR\u2019s middle-overs boundary scoring stagnation.",
-      "risks": "Aggressive shot selection carries high dismissal risk against quality swing.",
-      "source_url": "https://www.iplt20.com/auction-2027-retention-release"
-    },
-    {
-      "rank": 8,
       "name": "Mahipal Lomror",
       "previous_franchise": "MI",
       "status": "VERIFIED AUCTION ELIGIBLE",
@@ -2874,7 +2852,7 @@
       "source_url": "https://www.iplt20.com/auction-2027-retention-release"
     },
     {
-      "rank": 9,
+      "rank": 8,
       "name": "Abishek Porel",
       "previous_franchise": "DC",
       "status": "VERIFIED AUCTION ELIGIBLE",
@@ -2896,7 +2874,7 @@
       "source_url": "https://www.iplt20.com/auction-2027-retention-release"
     },
     {
-      "rank": 10,
+      "rank": 9,
       "name": "Rachin Ravindra",
       "previous_franchise": "KKR",
       "status": "VERIFIED AUCTION ELIGIBLE",
@@ -2915,6 +2893,28 @@
       "max_bid": "\u20b97.0 Cr",
       "why_target": "World-class multi-phase accumulator and spin option. Provides top-order class and slow left-arm control at Sawai Mansingh Stadium.",
       "risks": "Requires overseas slot; middle-overs boundary boundary rate needs elevation.",
+      "source_url": "https://www.iplt20.com/auction-2027-retention-release"
+    },
+    {
+      "rank": 10,
+      "name": "Abhinav Manohar",
+      "previous_franchise": "GT",
+      "status": "VERIFIED AUCTION ELIGIBLE",
+      "classification": "Indian",
+      "role": "Middle-Overs Power Striker (RHB)",
+      "ipl_matches": 22,
+      "ipl_runs": 292,
+      "overall_sr": 139.7,
+      "p_sr": 151.5,
+      "p_avg": 13.0,
+      "p_balls": 103,
+      "ppi_score": 70.07,
+      "rr_fit_score": 93.0,
+      "suitability_score": 81.2,
+      "est_value": "\u20b92.0\u20133.5 Cr",
+      "max_bid": "\u20b94.0 Cr",
+      "why_target": "High-ceiling Indian domestic boundary striker (151.5 pressure SR). Fills middle-order depth and protects RR\u2019s 3 remaining overseas slots.",
+      "risks": "Limited defensive gear if early wickets fall in powerplay.",
       "source_url": "https://www.iplt20.com/auction-2027-retention-release"
     }
   ],
@@ -3169,11 +3169,11 @@
           "walk_away": 6.5
         },
         {
-          "name": "Ajinkya Rahane",
+          "name": "Rahul Tripathi",
           "type": "Indian",
-          "role": "No. 3 Anchor",
-          "bid": 2.5,
-          "walk_away": 3.5
+          "role": "No. 3 Striker / Anchor",
+          "bid": 3.5,
+          "walk_away": 4.5
         },
         {
           "name": "Mahipal Lomror",
@@ -3190,15 +3190,15 @@
           "walk_away": 3.2
         },
         {
-          "name": "Asif Khan",
-          "type": "Overseas",
+          "name": "M Shahrukh Khan",
+          "type": "Indian",
           "role": "Power Finisher",
           "bid": 1.5,
-          "walk_away": 2.0
+          "walk_away": 2.5
         }
       ],
-      "total_spend": 24.0,
-      "purse_remaining": 3.05,
+      "total_spend": 25.0,
+      "purse_remaining": 2.05,
       "overseas_bought": 2,
       "indian_bought": 4,
       "final_squad_size": 25,
@@ -3569,6 +3569,25 @@
       "replacement_rank": 6,
       "replacement_eligibility": "VERIFIED AUCTION ELIGIBLE",
       "why_replacement_better": "Proven 145+ kph Indian hit-the-deck fast bowler (111.63 PPI, 37 clutch wickets, 60 IPL wickets). Took 19 wickets for RR in IPL 2022. Provides elite domestic pace depth."
+    },
+    {
+      "removed_player": "Ajinkya Rahane",
+      "list": "Top 10 Batsmen",
+      "original_rank": 1,
+      "reason_for_removal": "OFFICIALLY UNAVAILABLE / WILL NOT PLAY IPL 2027. Per franchise intelligence, Rahane is not participating in the IPL 2027 campaign.",
+      "replacement_player": "Rahul Tripathi (Elevated to #1) & Abhinav Manohar (#10)",
+      "replacement_rank": 1,
+      "replacement_eligibility": "VERIFIED AUCTION ELIGIBLE",
+      "why_replacement_better": "Rahul Tripathi provides dynamic high-intent strokeplay at No. 3 (166.4 pressure SR, 77.75 PPI, 906 IPL runs), attacking both express pace and mystery spin. Abhinav Manohar adds domestic boundary power (151.5 pressure SR)."
+    }
+  ],
+  "unavailable_players_registry": [
+    {
+      "player_name": "Ajinkya Rahane",
+      "nationality": "Indian",
+      "status": "OFFICIALLY UNAVAILABLE / WILL NOT PLAY IPL 2027",
+      "reason": "Will not participate in IPL 2027 season per franchise intelligence update. Disqualified from RR auction shortlist.",
+      "replacement_player": "Rahul Tripathi (Promoted to #1 Samson Replacement) & Abhinav Manohar (Entered Top 10)"
     }
   ]
 }

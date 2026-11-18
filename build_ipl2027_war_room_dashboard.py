@@ -53,16 +53,16 @@ Official 18 November 2026 Baseline Submission • SupeRR Selector Season 2 (Roun
   4. Domestic Indian Depth & Wicketkeeper Backup: 3 to 4 Indian buys required to respect 8-overseas maximum.
 
 3. TOP 10 VERIFIED AUCTION-ELIGIBLE BATTERS FOR RR:
-1. Ajinkya Rahane (Indian | KKR | PPI: 68.88 | Press SR: 147.47 | Press Avg: 31.58 | No. 3 Anchor, replaces Samson)
+1. Rahul Tripathi (Indian | KKR | PPI: 77.75 | Press SR: 166.40 | No. 3 Intent Striker & Samson Replacement)
 2. Nitish Rana (Indian | DC | PPI: 66.60 | Press SR: 155.06 | Spin Destroyer in Overs 7–15)
 3. Nehal Wadhera (Indian | PBKS | PPI: 62.32 | Press SR: 145.20 | Left-Hand Clutch Death Finisher)
 4. Glenn Maxwell (Overseas | RCB | PPI: 81.61 | Press SR: 180.89 | Generational Spin Destroyer & Off-Spinner)
 5. Shimron Hetmyer (Overseas | RR | PPI: 65.82 | Press SR: 155.92 | Proven RR Match-Winner Buy-back)
 6. M Shahrukh Khan (Indian | GT | PPI: 75.14 | Press SR: 169.48 | Designated Indian Death Boundary Finisher)
-7. Rahul Tripathi (Indian | KKR | PPI: 57.98 | Press SR: 141.74 | Aggressive Powerplay/No. 3 Intent Striker)
-8. Mahipal Lomror (Indian | MI | PPI: 66.37 | Press SR: 162.03 | Southpaw Spin Muscle / SLA)
-9. Abishek Porel (Indian | DC | PPI: 49.32 | Press SR: 132.88 | Dynamic Indian Backup Keeper-Batter)
-10. Rachin Ravindra (Overseas | KKR | PPI: 66.38 | Press SR: 147.70 | Top-Order / SLA All-Rounder)
+7. Mahipal Lomror (Indian | MI | PPI: 66.37 | Press SR: 162.03 | Southpaw Spin Muscle / SLA)
+8. Abishek Porel (Indian | DC | PPI: 49.32 | Press SR: 132.88 | Dynamic Indian Backup Keeper-Batter)
+9. Rachin Ravindra (Overseas | KKR | PPI: 66.38 | Press SR: 147.70 | Top-Order / SLA All-Rounder)
+10. Abhinav Manohar (Indian | GT | PPI: 70.07 | Press SR: 151.50 | Middle-Overs Power Striker)
 
 4. TOP 10 VERIFIED AUCTION-ELIGIBLE BOWLERS FOR RR:
 1. Matheesha Pathirana (Overseas | KKR | PPI: 176.17 | 61 Clutch Wkts | 7.90 Press Econ | Generational Death Specialist)
@@ -76,15 +76,15 @@ Official 18 November 2026 Baseline Submission • SupeRR Selector Season 2 (Roun
 9. Tushar Deshpande (Indian | RR | PPI: 114.22 | 41 Clutch Wkts | Domestic Seam Reserve)
 10. Akash Deep (Indian | KKR | PPI: 25.74 | Hit-the-Deck Seam Reinforcement)
 
-5. OPTIMAL BUDGET ALLOCATION (SCENARIO A • ₹24.0 CR SPEND • ₹3.05 CR BUFFER):
+5. OPTIMAL BUDGET ALLOCATION (SCENARIO A • ₹25.0 CR SPEND • ₹2.05 CR BUFFER):
 • P1 (Death Specialist): Matheesha Pathirana (₹9.5 Cr) • P2 (Finisher): Nehal Wadhera (₹5.5 Cr)
-• P3 (No. 3 Anchor): Ajinkya Rahane (₹2.5 Cr) • P4 (Spin Destructor): Mahipal Lomror (₹2.5 Cr)
+• P3 (No. 3 Striker): Rahul Tripathi (₹3.5 Cr) • P4 (Spin Destructor): Mahipal Lomror (₹2.5 Cr)
 • P5 (Backup Keeper): Abishek Porel (₹2.5 Cr) • P6 (Finisher Depth): M Shahrukh Khan (₹1.5 Cr)
 Result: 4 Indian Buys + 2 Overseas Buys = Exactly 25 Squad Members (7 Overseas total, well under 8 limit).
 
 6. OPTIMIZED PLAYING XI & IMPACT STRATEGY:
-Yashasvi Jaiswal, Vaibhav Sooryavanshi/Pretorius, Ajinkya Rahane (Auction), Riyan Parag, Dhruv Jurel (Wk), Nehal Wadhera (Auction), Ravindra Jadeja, Jofra Archer, Mohammed Shami, Ravi Bishnoi, Sandeep Sharma.
-Impact Player: Matheesha Pathirana replaces Ajinkya Rahane during the bowling innings."""
+Yashasvi Jaiswal, Vaibhav Sooryavanshi/Pretorius, Rahul Tripathi (Auction), Riyan Parag, Dhruv Jurel (Wk), Nehal Wadhera (Auction), Ravindra Jadeja, Jofra Archer, Mohammed Shami, Ravi Bishnoi, Sandeep Sharma.
+Impact Player: Matheesha Pathirana replaces Rahul Tripathi during the bowling innings."""
 
 html_code = f'''<!DOCTYPE html>
 <html lang="en">
@@ -636,7 +636,7 @@ html_code = f'''<!DOCTYPE html>
           <p class="text-xs text-slate-300 mt-2 leading-relaxed">
             Sanju Samson's trade to CSK creates a void at No. 3. RR needs a domestic stabilizer who absorbs early wickets and lets Jaiswal attack freely.
           </p>
-          <div class="mt-3 text-xs font-bold text-pink-400 font-mono">Target: Ajinkya Rahane / Rahul Tripathi</div>
+          <div class="mt-3 text-xs font-bold text-pink-400 font-mono">Target: Rahul Tripathi / Rahul Tripathi</div>
         </div>
 
         <div class="rr-card rounded-2xl p-5 border-l-4 border-l-amber-500">
@@ -804,7 +804,7 @@ html_code = f'''<!DOCTYPE html>
       <div class="rr-card-highlight rounded-2xl p-6">
         <h2 class="text-lg font-bold text-white">Rajasthan Royals Optimized Playing XI & Impact Player Model</h2>
         <p class="text-xs text-slate-300 mt-1 max-w-3xl">
-          Constructed using Rajasthan Royals' 19 retained players plus targeted auction acquisitions (Ajinkya Rahane, Nehal Wadhera, and Matheesha Pathirana as Impact Sub).
+          Constructed using Rajasthan Royals' 19 retained players plus targeted auction acquisitions (Rahul Tripathi, Nehal Wadhera, and Matheesha Pathirana as Impact Sub).
         </p>
       </div>
 
@@ -835,7 +835,7 @@ html_code = f'''<!DOCTYPE html>
           <div class="p-4 rounded-xl bg-indigo-950/40 border border-indigo-500/40 space-y-2">
             <div class="text-xs font-bold text-indigo-300 font-mono uppercase">Impact Player Tactic</div>
             <p class="text-xs text-slate-200 leading-relaxed">
-              <strong>Matheesha Pathirana ✈️</strong> (Target) subbed in for <strong>Ajinkya Rahane</strong> at the start of the bowling innings.
+              <strong>Matheesha Pathirana ✈️</strong> (Target) subbed in for <strong>Rahul Tripathi</strong> at the start of the bowling innings.
             </p>
             <div class="text-[11px] text-slate-400 mt-1">
               Provides RR with 6 frontline bowling options: Jofra Archer ✈️ (Overs 1, 3, 15, 17), Mohammed Shami (Overs 2, 4, 13, 19), Sandeep Sharma (Overs 6, 16, 18, 20), Matheesha Pathirana ✈️ (Overs 8, 12, 14, 20), Ravindra Jadeja (Overs 5, 7, 9, 11), Ravi Bishnoi (Overs 10, 12).
